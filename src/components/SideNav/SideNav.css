@@ -1,0 +1,20 @@
+.sideNavDiv {
+    padding: 15px;
+    width: 15%;
+    min-width: 150px;
+    background-color: #20292C;
+    display: flex;
+    flex-direction: column;
+}
+
+.sidebarFiller {
+    flex-grow: 1;
+}
+.activeNavClass {
+    font-weight: bold;
+}
+
+.nav-item > a {
+    color: #A5AFB9;
+    text-decoration: none;
+}
