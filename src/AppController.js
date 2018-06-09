@@ -16,16 +16,22 @@ class AppController extends Component {
     this.setState({
       chiefMode: !this.state.chiefMode
     });
-  } //TODO: Change this method to provide proper authentication
+  } 
+    //TODO: Change this method to provide proper authentication 
+    //(can send chief mode inside a JWT token)
 
   toggleLogin = () => {
     this.setState({
       authenticated: !this.state.authenticated
     });
-  } //TODO: Change this method to provide proper authentication
+  } //TODO: Change this method to provide proper authentication (can use jwt verify)
 
   render() {
-    // <App /> has no internal state!
+    /** 
+     * <App /> has no internal state, 
+     * all state is controlled by <AppController>
+     *  and passed down as props to <App> 
+    */
     return <App
       authenticated={this.state.authenticated}
       chiefMode={this.state.chiefMode}

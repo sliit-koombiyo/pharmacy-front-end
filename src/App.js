@@ -57,6 +57,9 @@ class App extends Component {
       },
     ];
 
+    /** this is a wrapper for <Route> which enables 
+     * redirecting to login if not authenticated
+    */
     const PrivateRoute = ({component: Component, exact, strict, path, ...rest}) => (
       <Route
         exact={exact}
@@ -86,6 +89,7 @@ class App extends Component {
                                         toggleLogin={this.props.toggleLogin}/>
                  }
           />
+
           <PrivateRoute
             path="/"
             exact
@@ -94,21 +98,22 @@ class App extends Component {
             chiefMode={this.props.chiefMode}
             toggleChiefMode={this.props.toggleChiefMode}
             toggleLogin={this.props.toggleLogin}
-
           />
+
           <PrivateRoute
             path="/app"
             component={SideNav}
             routes={routes}
             toggleChiefMode={this.props.toggleChiefMode}
             toggleLogin={this.props.toggleLogin}
-
           />
+
           <PrivateRoute
             path="/app"
             component={MainContent}
             routes={routes}
           />
+          
         </div>
       </Router>
     );
