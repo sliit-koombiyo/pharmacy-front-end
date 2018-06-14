@@ -15,7 +15,7 @@ class DrugDetails extends Component {
   DeleteDrug=(evt)=>{
     console.log(evt.target.getAttribute('tempdata'));
     const todelete = evt.target.getAttribute('tempdata');
-    Axios.delete('http://localhost/drugs/',{params:{id:todelete}}).then((res)=>{
+    Axios.delete("http://localhost/drugs/"+todelete).then((res)=>{
       console.log(res)
     }).catch((err)=>{
       console.log(err);
