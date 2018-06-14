@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter, Table } from 'reactstrap';
+import Axios from 'axios';
 
 class PrescriptionDetails extends Component {
   constructor(props) {
@@ -9,6 +10,7 @@ class PrescriptionDetails extends Component {
   }
 
   toggle() {
+    this.props.openPayment();
     this.props.toggle()
   }
 
@@ -45,7 +47,7 @@ class PrescriptionDetails extends Component {
           </ModalBody>
           <ModalFooter>
             <Button color="primary" onClick={this.toggle}>Dispense</Button>{' '}
-            <Button color="secondary" onClick={this.toggle}>Cancel</Button>
+            <Button color="secondary" onClick={this.props.toggle}>Cancel</Button>
           </ModalFooter>
         </Modal>
       </div>
