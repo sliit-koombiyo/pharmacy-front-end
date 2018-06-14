@@ -9,6 +9,8 @@ import {
 import {Col} from "reactstrap";
 import Home from "./components/Home/Home";
 import AssistantHome from './components/assistant/AssistantHome';
+import AddDrugs from './components/chief/AddDrugs';
+
 import './App.css';
 
 class App extends Component {
@@ -45,7 +47,17 @@ class App extends Component {
         title: 'Shoe laces (chief)',
         component: () => <Col><h2>CHIEF Shoelaces</h2></Col>
       },
-    ] : [
+      {
+        path: '/app/add_drugs',
+        FA_name:"capsules",
+        title: 'Add Drugs',
+        component: () => <Col><AddDrugs/></Col>
+      },
+    ] 
+    
+    : 
+    
+    [
       {
         path: '/app',
         exact: true,
