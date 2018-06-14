@@ -9,7 +9,7 @@ import {
 import {Col} from "reactstrap";
 import Home from "./components/Home/Home";
 import AssistantHome from './components/assistant/AssistantHome';
-import AddDrugs from './components/chief/AddDrugs';
+import AddDrugs from './components/Drugs/AddDrugs';
 
 import './App.css';
 
