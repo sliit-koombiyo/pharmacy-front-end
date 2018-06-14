@@ -22,12 +22,11 @@ class AssistantHome extends Component {
 
   componentDidMount() {
     axios.get('http://localhost:5000/prescriptions').then((response) => {
-      console.log(JSON.stringify(response.data));
       this.setState({ prescriptions: response.data, results: response.data })
     })
     axios.get('http://localhost:5000/drugs').then((response) => {
-      console.log(JSON.stringify(response.data));
-      this.setState({ stocks: response.data, results: response.data })
+      console.log(JSON.stringify("drug list" + JSON.stringify(response.data.data)));
+      this.setState({ stocks: response.data.data})
     })
   }
 
@@ -113,14 +112,15 @@ class AssistantHome extends Component {
               </thead>
               <tbody>
                 {
-                  this.state.stocks.map((element, index) => {
-                    return <tr key={index}>
-                      <td>{element.drugID}</td>
+                  (
+                    this.state.stocks !== undefined)?
+                    this.state.stocks.map((element, index) => {
+                        return <tr key={index}>
+                            <td>{element.drugID}</td>
                       <td>{element.name}</td>
                       <td>{element.stock}</td>
-                    
-                    </tr>
-                  })
+                        </tr>
+                    }) : <tr><td></td><td></td><td></td></tr>
                 }
               </tbody>
             </Table>
