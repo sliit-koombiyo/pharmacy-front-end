@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import App from './App';
-import {Redirect} from 'react-router-dom';
+// import {Redirect} from 'react-router-dom';
 
 class AppController extends Component {
 

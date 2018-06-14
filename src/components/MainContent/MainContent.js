@@ -20,7 +20,7 @@ class MainContent extends Component {
                   key={index}
                   path={route.path}
                   exact={route.exact}
-                  component={route.main}
+                  component={route.component}
                 />
               ))
             }

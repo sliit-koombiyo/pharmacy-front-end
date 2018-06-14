@@ -7,13 +7,23 @@ import {
   Route, Redirect
 } from 'react-router-dom';
 import {Col} from "reactstrap";
-import Home from "../src/components/Home/Home";
+import Home from "./components/Home/Home";
+import AssistantHome from './components/assistant/AssistantHome';
 import './App.css';
 
 class App extends Component {
 
   render() {
 
+    /**
+     * @description routes is an array of objects which defined each internal route within the app
+     * @property path will be the URL
+     * @property 'FA_name' the fontAwesome icon name
+     * @property 'Title' the link name for the left navigation panel
+     * @property component is a function used to make the component shown in the MainContent section
+     *  There are 2 arrays; the first one holds the routes and components for the Chief Pharmacist 
+     * and the next array holds the routes and components for the assistant   
+     */
     let routes;
     routes = this.props.chiefMode ? [
       {
@@ -21,19 +31,19 @@ class App extends Component {
         exact: true,
         FA_name:"tachometer-alt",
         title: 'Home (chief)',
-        main: () => <Col>CHIEF <Home/></Col>
+        component: () => <Col>CHIEF <Home/></Col>
       },
       {
         path: '/app/send-requests',
         FA_name:"stethoscope",
         title: 'Send Requests (chief)',
-        main: () => <Col><h2>CHIEF Send Requests</h2></Col>
+        component: () => <Col><h2>CHIEF Send Requests</h2></Col>
       },
       {
         path: '/app/shoelaces',
         FA_name:"heartbeat",
         title: 'Shoe laces (chief)',
-        main: () => <Col><h2>CHIEF Shoelaces</h2></Col>
+        component: () => <Col><h2>CHIEF Shoelaces</h2></Col>
       },
     ] : [
       {
@@ -41,19 +51,19 @@ class App extends Component {
         exact: true,
         FA_name:"tachometer-alt",
         title: 'Home',
-        main: () => <Col><Home/></Col>
+        component: () => <Col><AssistantHome/></Col>
       },
       {
         path: '/app/send-requests',
         FA_name:"stethoscope",
         title: 'Send Requests',
-        main: () => <Col><h2>Send Requests</h2></Col>
+        component: () => <Col><h2>Send Requests</h2></Col>
       },
       {
         path: '/app/shoelaces',
         FA_name:"heartbeat",
         title: 'Shoe laces',
-        main: () => <Col><h2>Shoelaces</h2></Col>
+        component: () => <Col><h2>Shoelaces</h2></Col>
       },
     ];
 

@@ -3,6 +3,14 @@ body {
     height: 100%;
 }
 
+td, th {
+  vertical-align: middle !important;
+}
+
+.card {
+  border: 2px solid rgba(0, 0, 0, 0.125) !important;
+}
+
 #root {
   display: -webkit-box;
   display: -moz-box;
@@ -15,10 +23,6 @@ body {
 
 a {
   cursor: pointer;
-}
-
-.card {
-  padding: 20px !important;
 }
 
 .loginCardContainer {

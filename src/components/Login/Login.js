@@ -1,9 +1,9 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import {
   Input, Button, Label, Card, Alert,
   Modal, ModalHeader, ModalBody, Form, FormGroup
 } from 'reactstrap';
-import {Redirect} from "react-router-dom";
+import { Redirect } from "react-router-dom";
 
 class Login extends Component {
 
@@ -53,7 +53,7 @@ class Login extends Component {
   login = () => {
     console.log('login called');
     this.props.toggleLogin();
-    this.setState({redirectToReferrer: true});
+    this.setState({ redirectToReferrer: true });
   };
 
   register = () => {
@@ -113,39 +113,41 @@ class Login extends Component {
 
     if (this.props.authenticated) {
       // return <Redirect to={from} />;
-      return <Redirect to="/app"/>;
+      return <Redirect to="/app" />;
     }
 
     return (
       <div className="loginCardContainer">
         <p>You must log in to view the page</p>
         <Card>
-          <Label for="usernameInput">Username</Label>
-          <Input
-            type="text"
-            name="username"
-            id="usernameInput"
-            placeholder="username"
-            onChange={this.updateUsernameValue}
-          />
-          <br/>
-          <Label for="passwordInput">Password</Label>
-          <Input
-            type="password"
-            name="password"
-            id="passwordInput"
-            placeholder="password"
-            onChange={this.updatePasswordValue}
-          />
-          <br/>
-          <Button onClick={this.login}>Log in</Button>
-          <br/>
-          <div>
-            Don't have an account? - <a style={{color: "#0069d9"}} onClick={this.toggleModal}>Register here</a>
+          <div style={{ padding: 20 }}>
+            <Label for="usernameInput">Username</Label>
+            <Input
+              type="text"
+              name="username"
+              id="usernameInput"
+              placeholder="username"
+              onChange={this.updateUsernameValue}
+            />
+            <br />
+            <Label for="passwordInput">Password</Label>
+            <Input
+              type="password"
+              name="password"
+              id="passwordInput"
+              placeholder="password"
+              onChange={this.updatePasswordValue}
+            />
+            <br />
+            <Button onClick={this.login}>Log in</Button>
+            <br />
+            <div>
+              Don't have an account? - <a style={{ color: "#0069d9" }} onClick={this.toggleModal}>Register here</a>
+            </div>
+            <Alert isOpen={this.state.errorOpen} color={this.state.alertColor}>
+              {this.state.errorText}
+            </Alert>
           </div>
-          <Alert isOpen={this.state.errorOpen} color={this.state.alertColor}>
-            {this.state.errorText}
-          </Alert>
         </Card>
         <Modal isOpen={this.state.registerModalOpen} toggle={this.toggleModal} className={this.props.className}>
           <ModalHeader toggle={this.toggleModal}>Welcome New User!</ModalHeader>
@@ -154,26 +156,26 @@ class Login extends Component {
               <FormGroup>
                 <Label for="inputUsername">Username</Label>
                 <Input onChange={this.handleInputChange} type="text" name="inputUsername" id="inputUsername"
-                       placeholder="Username"/>
+                  placeholder="Username" />
               </FormGroup>
               <FormGroup>
                 <Label for="inputPassword">Password</Label>
                 <Input onChange={this.handleInputChange} type="password" name="inputPassword" id="inputPassword"
-                       placeholder="Password"/>
+                  placeholder="Password" />
               </FormGroup>
               <FormGroup>
                 <Label for="inputEmail">E-Mail Address</Label>
                 <Input onChange={this.handleInputChange} type="email" name="inputEmail" id="inputEmail"
-                       placeholder="user@example.com"/>
+                  placeholder="user@example.com" />
               </FormGroup>
               <FormGroup>
                 <Label for="inputPhone">Phone Number</Label>
                 <Input onChange={this.handleInputChange} type="email" name="inputPhone" id="inputPhone"
-                       placeholder="Phone"/>
+                  placeholder="Phone" />
               </FormGroup>
               <Button name="registerBtn" onClick={this.register}>Register</Button>
             </Form>
-            <hr/>
+            <hr />
             <Alert isOpen={this.state.registerAlertOpen} color="danger">
               {this.state.registerAlertText}
             </Alert>
