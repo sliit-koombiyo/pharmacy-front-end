@@ -13,6 +13,7 @@ class AssistantHome extends Component {
     super();
     this.state = {
       prescriptions: [],
+      stocks :[],
       selectedPrescription: {},
       results: [],
       modalOpen: false
@@ -23,6 +24,10 @@ class AssistantHome extends Component {
     axios.get('http://localhost:5000/prescriptions').then((response) => {
       console.log(JSON.stringify(response.data));
       this.setState({ prescriptions: response.data, results: response.data })
+    })
+    axios.get('http://localhost:5000/drugs').then((response) => {
+      console.log(JSON.stringify(response.data));
+      this.setState({ stocks: response.data, results: response.data })
     })
   }
 
@@ -94,8 +99,31 @@ class AssistantHome extends Component {
         </Card>
         <br />
         <Card>
+        <CardHeader style={{ backgroundColor: '#397ed0', color: 'white' }}>Drug Dispense</CardHeader>
           <CardBody>
             <CardTitle>Card</CardTitle>
+            <Table striped responsive bordered size="sm">
+              <thead>
+                <tr>
+                  <th>Drug ID</th>
+                  <th>Drug Name</th>
+                  <th>Quantity</th>
+                  
+                </tr>
+              </thead>
+              <tbody>
+                {
+                  this.state.stocks.map((element, index) => {
+                    return <tr key={index}>
+                      <td>{element.drugID}</td>
+                      <td>{element.name}</td>
+                      <td>{element.stock}</td>
+                    
+                    </tr>
+                  })
+                }
+              </tbody>
+            </Table>
             <CardSubtitle>Home subtitle</CardSubtitle>
             <CardText>Some quick example text to build on the card title and make up the bulk of the card's
               content.
