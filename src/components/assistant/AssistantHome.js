@@ -7,13 +7,12 @@ import {
   Card, CardBody, CardSubtitle, CardText, CardTitle,
   CardHeader, CardFooter, Table
 } from 'reactstrap';
-
 class AssistantHome extends Component {
 
   constructor() {
     super();
     this.state = {
-      prescriptions: [],
+      allPrescriptions: [],
       stocks: [],
       selectedPrescription: {},
       results: [],
@@ -21,11 +20,15 @@ class AssistantHome extends Component {
       paymentOpen: false
     }
   }
-
-  componentDidMount() {
+  refreshPrescriptions = () => {
     axios.get('https://koombiyo-pharmacy.herokuapp.com/prescriptions').then((response) => {
-      this.setState({ prescriptions: response.data, results: response.data })
+      this.setState({ allPrescriptions: response.data, results: response.data }, () => {
+        console.log("prescriptions refreshed" + this.state.results);
+      })
     })
+  }
+  componentDidMount() {
+    this.refreshPrescriptions();
     axios.get('https://koombiyo-pharmacy.herokuapp.com/drugs').then((response) => {
       console.log(JSON.stringify("drug list" + JSON.stringify(response.data.data)));
       this.setState({ stocks: response.data.data })
@@ -42,7 +45,7 @@ class AssistantHome extends Component {
 
   handleClick = (evt) => {
     console.log(evt.target.getAttribute('tempdata'));
-    let selected = this.state.prescriptions.find((prescription) => {
+    let selected = this.state.allPrescriptions.find((prescription) => {
       return prescription._id === evt.target.getAttribute('tempdata');
     })
     this.setState({ selectedPrescription: selected }, () => {
@@ -57,7 +60,7 @@ class AssistantHome extends Component {
 
   handleSearch = (evt) => {
     this.regexp = new RegExp(evt.target.value, "gi");
-    this.tempArray = this.state.prescriptions;
+    this.tempArray = this.state.allPrescriptions;
     this.tempArray = this.tempArray.filter((pres) => {
       return pres.patientName.search(this.regexp) !== -1 || pres.patientID == evt.target.value;
     })
@@ -71,7 +74,9 @@ class AssistantHome extends Component {
           <CardHeader style={{ backgroundColor: '#397ed0', color: 'white' }}>Drug Dispense</CardHeader>
           <CardBody>
             <CardTitle>Search by HIN or Patient Name</CardTitle>
-            <input type="text" onChange={this.handleSearch} />
+            <div className="d-flex justify-content-between">
+              <input type="text" onChange={this.handleSearch} />
+            </div>
             <hr />
             <Table striped responsive bordered size="sm">
               <thead>
@@ -80,6 +85,7 @@ class AssistantHome extends Component {
                   <th>Patient HIN</th>
                   <th>Patient Name</th>
                   <th>Created Date</th>
+                  <th>Status</th>
                   <th>Action</th>
                 </tr>
               </thead>
@@ -87,12 +93,13 @@ class AssistantHome extends Component {
                 {
                   this.state.results.map((prescription, index) => {
                     return <tr key={index}>
-                      <td>{prescription._id}</td>
+                      <td>{prescription._id.substr(prescription._id.length - 5)}</td>
                       <td>{prescription.patientID}</td>
                       <td>{prescription.patientName}</td>
                       <td>{this.formatDate(prescription.createdAt)}</td>
+                      <td>{prescription.dispensed ? "Dispensed" : "Pending"}</td>
                       <td>
-                        <Button color="link" tempdata={prescription._id} onClick={this.handleClick}>view &amp; dispense</Button>
+                        <Button color="link" tempdata={prescription._id} onClick={this.handleClick}>{prescription.dispensed ? "view" : "view & dispense"}</Button>
                       </td>
                     </tr>
                   })
@@ -109,6 +116,7 @@ class AssistantHome extends Component {
               prescription={this.state.selectedPrescription}
               open={this.state.paymentOpen}
               toggle={this.togglePaymentModal}
+              refreshPrescriptions={this.refreshPrescriptions}
             />
           </CardBody>
         </Card>

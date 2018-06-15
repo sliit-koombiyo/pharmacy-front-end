@@ -16,8 +16,8 @@ class PrescriptionDetails extends Component {
   render() {
     return (
       <div>
-        <Modal isOpen={this.props.open} toggle={this.toggle} className={this.props.className} size="lg">
-          <ModalHeader toggle={this.toggle}>Prescription : {this.props.prescription._id}</ModalHeader>
+        <Modal isOpen={this.props.open} toggle={this.props.toggle} className={this.props.className} size="lg">
+          <ModalHeader toggle={this.props.toggle}>Prescription : {this.props.prescription._id}</ModalHeader>
           <ModalBody>
             <Table striped responsive bordered size="sm">
               <thead>
@@ -45,7 +45,8 @@ class PrescriptionDetails extends Component {
             </Table>
           </ModalBody>
           <ModalFooter>
-            <Button color="primary" onClick={this.toggle}>Dispense</Button>{' '}
+          {!this.props.prescription.dispensed?<Button color="primary" onClick={this.toggle}>Dispense</Button>:null}
+            {' '}
             <Button color="secondary" onClick={this.props.toggle}>Cancel</Button>
           </ModalFooter>
         </Modal>

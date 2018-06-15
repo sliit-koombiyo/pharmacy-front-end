@@ -26,6 +26,7 @@ class Payment extends Component {
   dispense() {
     Axios.post('https://koombiyo-pharmacy.herokuapp.com/prescriptions/dispense', this.props.prescription).then((result)=>{
       console.log(result);
+      this.props.refreshPrescriptions()
     }).catch((err)=>{
       console.error(err)
     });
