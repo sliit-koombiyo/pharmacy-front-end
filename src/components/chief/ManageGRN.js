@@ -52,7 +52,7 @@ class ManageGRN extends Component {
 
     showDetails = (evt) => {
         // console.log(evt.target.getAttribute('tempdata'));
-        let selected = this.state.drugs.find((grn)=>{
+        let selected = this.state.grns.find((grn)=>{
           return grn._id === evt.target.getAttribute('tempdata');
         })
         this.setState({selectedGRN: selected}, ()=>{
@@ -77,7 +77,7 @@ class ManageGRN extends Component {
         return (
           <div>
             <Card>
-              <CardHeader style={{ backgroundColor: '#397ed0', color: 'white' }}>Add Drugs</CardHeader>
+              <CardHeader style={{ backgroundColor: '#397ed0', color: 'white' }}>Add Good Received Notes</CardHeader>
               <CardBody>
               <Form onSubmit={this.handleSubmit}>
                <b><Label htmlFor="noteID">Note ID</Label></b>
