@@ -3,6 +3,7 @@ import {NavLink} from 'react-router-dom';
 import './SideNav.css';
 import {Nav, NavItem, Button} from "reactstrap";
 import FA from "react-fontawesome";
+import axios from 'axios';
 
 class SideNav extends Component {
 
