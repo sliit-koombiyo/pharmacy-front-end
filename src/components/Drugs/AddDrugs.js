@@ -71,6 +71,7 @@ class AddDrugs extends Component {
       });
     }
 
+<<<<<<< HEAD
     AddNewDrug=(evt)=>{
     
       console.log(this.state.newDrug);
@@ -85,6 +86,12 @@ class AddDrugs extends Component {
       
         //const data = new FormData(event.target); // @reeshma This does not work 
        // console.log("form data : " + JSON.stringify(event.target.drugID.value)) 
+=======
+    handleSubmit(event) {
+      event.preventDefault();
+        const data = new FormData(event.target); // @reeshma This does not work 
+        console.log("form data : " + JSON.stringify(event.target.drugID.value)) 
+>>>>>>> 33b97c3248d6dc70c42216493e8b41cbcf9e3038
     //     event.preventDefault();
 
     //     console.log("form data : " + JSON.stringify(event.target.name.value)) 
