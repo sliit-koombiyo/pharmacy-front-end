@@ -9,6 +9,7 @@ import {
 import {Col} from "reactstrap";
 import AssistantHome from './components/assistant/AssistantHome';
 import AddDrugs from './components/Drugs/AddDrugs';
+import ManageGRN from './components/chief/ManageGRN';
 
 import './App.css';
 
@@ -52,6 +53,13 @@ class App extends Component {
         title: 'Add Drugs',
         component: () => <Col><AddDrugs/></Col>
       },
+      {
+        path: '/app/manage_grn',
+        FA_name:"capsules",
+        title: 'Manage GRN',
+        component: () => <Col><ManageGRN/></Col>
+      },
+
     ] 
     
     : 
