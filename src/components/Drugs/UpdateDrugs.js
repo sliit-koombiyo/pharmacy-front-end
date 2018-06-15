@@ -8,50 +8,71 @@ import Axios from 'axios';
 class UpdateDrug extends Component {
   constructor(props) {
     super(props);
-    this.state={
-      updatedDrug :{},
-       name:'',
-       stock:'',
-       type:'',
-       price:'',
-       dangerlevel:'',
-       reorderLevel:''
-     
-    }
+
     this.toggle = this.toggle.bind(this);
   }
+  
 
   toggle() {
     this.props.toggle()
-  }
-  handleChange =(event)=> {
-    this.state.toUpdate = event.target.getAttribute('tempdata');
-    this.setState({[event.target.name]:event.target.value} )
-    console.log(this.state.name);
+  } 
 
-    this.setState({updatedDrug:{
-       name:this.state.name,
-       stock:this.state.stock,
-       type:this.state.type,
-       price:this.state.price,
-       dangerlevel:this.state.dangerlevel,
-       reorderLevel:this.state.reorderLevel
+  refreshDrugs(){
+    this.props.refreshDrugs();
+  }
+
+  // handleChange =(event)=> {
+  //   this.state.toUpdate = event.target.getAttribute('tempdata');
+  //   this.setState({[event.target.name]:event.target.value} )
+  //   console.log(this.state.name);
+
+  //   this.setState({updatedDrug:{
+  //      name:this.state.name,
+  //      stock:this.state.stock,
+  //      type:this.state.type,
+  //      price:this.state.price,
+  //      dangerlevel:this.state.dangerlevel,
+  //      reorderLevel:this.state.reorderLevel
+       
+  //   }
+  //   });
+  // }
+  handleSubmit=(event)=>{
+       
+        event.preventDefault();
+        const postBody = {
+        id:event.target.id.value,
+        name: event.target.name.value,
+        stock: event.target.stock.value,
+        type: event.target.type.value,
+        price: event.target.price.value,
+        dangerlevel: event.target.dangerlevel.value, 
     }
-    });
+
+    const toUpdate = event.target.getAttribute('tempdata'); 
+    console.log("ID to update : " + JSON.stringify(toUpdate));
+    console.log("form data : " + JSON.stringify(postBody ));
+    Axios.post('http://localhost:5000/drugs/'+toUpdate,{postBody}).then((res)=>{
+          console.log(res)
+        }).catch((err)=>{
+          console.log(err);
+        });
+        this.toggle();
+        this.refreshDrugs();
   }
   
-  UpdateDrug=(evt)=>{
-    const toUpdate = evt.target.getAttribute('tempdata');
-    console.log(this.state.updatedDrug);
-    console.log("ID to update" +toUpdate);
+  // UpdateDrug=(evt)=>{
+  //   const toUpdate = evt.target.getAttribute('tempdata');
+  //   console.log(this.state.updatedDrug);
+  //   console.log("ID to update" +toUpdate);
 
-    Axios.post('http://localhost:5000/drugs/'+toUpdate,{params:{id:this.state.toUpdate},body:{data:this.updatedDrug}}).then((res)=>{
-      console.log(res)
-    }).catch((err)=>{
-      console.log(err);
-    });
-    this.toggle();
-  }
+  //   Axios.post('http://localhost:5000/drugs/'+toUpdate,{params:{id:this.state.toUpdate},body:{data:this.updatedDrug}}).then((res)=>{
+  //     console.log(res)
+  //   }).catch((err)=>{
+  //     console.log(err);
+  //   });
+  //   this.toggle();
+  // }
 
   render() {
     return (
@@ -60,34 +81,35 @@ class UpdateDrug extends Component {
           <ModalHeader toggle={this.toggle}>Drug : {this.props.drug.name}</ModalHeader>
           <ModalBody>
             {
-                <Form onSubmit={this.UpdateDrug}>
+                <Form onSubmit={this.handleSubmit}>
                 <Label htmlFor="drugID">Drug ID  :</Label>{"    "}
                 <Label htmlFor="drugID">{this.props.drug.drugID}</Label>
+                <Input id="drugID" name="drugID" type="text" tempdata={this.props.drug.drugID}  placeholder={this.props.drug.drugID} disabled />
                 <br></br>
 
                  <Label htmlFor="name">DrugName</Label>
-                 <Input id="name" name="name" type="text" placeholder={this.props.drug.name} onChange={event => this.handleChange(event)} />
+                 <Input id="name" name="name" type="text" placeholder={this.props.drug.name} />
 
                  <Label htmlFor="stock">stock</Label>
-                  <Input id="stock" name="stock" type="text"  placeholder={this.props.drug.stock}  onChange={event => this.handleChange(event)}/>
+                  <Input id="stock" name="stock" type="text"  placeholder={this.props.drug.stock}/>
 
                   <Label htmlFor="type">Type</Label>
                   <Input id="type" name="type" type="text"  placeholder={this.props.drug.type} />
 
                   <Label htmlFor="price">Price</Label>
-                  <Input id="price" name="price" type="text"  placeholder={this.props.drug.price} onChange={event => this.handleChange(event)} />
+                  <Input id="price" name="price" type="text"  placeholder={this.props.drug.price} />
 
                    <Label htmlFor="dangerlevel">Dangerlevel</Label>
-                  <Input id="dangerlevel" name="dangerlevel" type="text"  placeholder={this.props.drug.dangerlevel} onChange={event => this.handleChange(event)} />
+                  <Input id="dangerlevel" name="dangerlevel" type="text"  placeholder={this.props.drug.dangerlevel}/>
 
                   <Label htmlFor="reorderLevel">ReorderLevel</Label>
-                  <Input id="reorderLevel" name="reorderLevel" type="text"  placeholder={this.props.drug.reorderLevel} onChange={event => this.handleChange(event)}/>
-                
-                    </Form>
+                  <Input id="reorderLevel" name="reorderLevel" type="text"  placeholder={this.props.drug.reorderLevel}/>
+                  <Button type="submit" value="Update">Update</Button>
+                  </Form>
                 }
           </ModalBody>
           <ModalFooter>
-            <Button color="primary" tempdata={this.props.drug.drugID} onClick={this.UpdateDrug}>Update</Button>{' '}
+            {/* <Button color="primary" tempdata={this.props.drug.drugID} onClick={this.UpdateDrug}>Update</Button>{' '} */}
             <Button color="secondary" onClick={this.toggle}>Cancel</Button>
           </ModalFooter>
         </Modal>
