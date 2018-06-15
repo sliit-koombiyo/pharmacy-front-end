@@ -1,20 +1,28 @@
 import React, { Component } from 'react';
 import * as axios from 'axios';
 import {
-    Button,
+    Button,Label,Input,
     Card, CardBody, CardSubtitle, CardText, CardTitle,
-    CardHeader, CardFooter, Table
+    CardHeader, CardFooter, Table,Form
 } from 'reactstrap';
-import DrugDetails from '../Drugs/DrugDetails';
+import GRNDetails from './GRNDetails';
+
+import Dropdown from 'react-dropdown';
+import 'react-dropdown/style.css';
+const DropDownFortypes =["pills","Table","Cream","Syrup"];
+const defaultOption = DropDownFortypes[0];
+
+
 
 class ManageGRN extends Component {
 
+  
     constructor() {
         super();
         this.handleSubmit = this.handleSubmit.bind(this);
         this.state = {
             grns:[],
-            selectedDGRN: {},
+            selectedGRN: {},
             modalOpen: false
         }
     }
@@ -26,26 +34,44 @@ class ManageGRN extends Component {
     componentDidMount(){
         axios.get('http://localhost:5000/grn').then((response) => {
             console.log(JSON.stringify("grn list" + JSON.stringify(response.data.data)));
-            this.setState({ drugs: response.data.data})
-          })
+            this.setState({ grns: response.data.data})
+          });
+          
+         
     }
 
     handleSubmit(event) {
         event.preventDefault();
-        const data = new FormData(event.target);
-        axios.post("http://localhost:5000/grn",{body:data});
+        const data = new FormData(event.target); // @reeshma This does not work 
+        console.log("form data : " + JSON.stringify(event.target.noteID.value)) 
+        // try creating an object using the above -> event.target.drugID.value
+        //and pass that object to the axios post method
+        
+        // axios.post("http://localhost:5000/drugs",{data});
     }
 
     showDetails = (evt) => {
         // console.log(evt.target.getAttribute('tempdata'));
-        let selected = this.state.drugs.find((drug)=>{
-          return drug._id === evt.target.getAttribute('tempdata');
+        let selected = this.state.drugs.find((grn)=>{
+          return grn._id === evt.target.getAttribute('tempdata');
         })
-        this.setState({selectedDrug: selected}, ()=>{
+        this.setState({selectedGRN: selected}, ()=>{
           this.toggleModal()
        });
        
       }
+      // goToUpdate= (evt) => {
+      //   // console.log(evt.target.getAttribute('tempdata'));
+      //   let selected = this.state.drugs.find((drug)=>{
+      //     return drug._id === evt.target.getAttribute('tempdata');
+      //   })
+      //   this.setState({selectedDrug: selected}, ()=>{
+      //     this.toggleModal()
+      //  });
+       
+      // }
+
+      
 
     render() {
         return (
@@ -53,54 +79,55 @@ class ManageGRN extends Component {
             <Card>
               <CardHeader style={{ backgroundColor: '#397ed0', color: 'white' }}>Add Drugs</CardHeader>
               <CardBody>
-              <form onSubmit={this.handleSubmit}>
-                <label htmlFor="drugID">DrugID</label>
-                 <input id="drugID" name="drugID" type="text" />
-
-                 <label htmlFor="name">DrugName</label>
-                 <input id="name" name="name" type="text" />
-
-                 <label htmlFor="stock">stock</label>
-                  <input id="stock" name="stock" type="text" />
-
-                  <label htmlFor="type">Type</label>
-                  <input id="type" name="type" type="text" />
-
-                  <label htmlFor="price">Price</label>
-                  <input id="price" name="price" type="text" />
-
-                   <label htmlFor="dangerlevel">Dangerlevel</label>
-                  <input id="dangerlevel" name="dangerlevel" type="text" />
-
-                  <label htmlFor="reorderLevel">ReorderLevel</label>
-                  <input id="reorderLevel" name="reorderLevel" type="text" />
-                <button>Add</button>
-      </form>
+              <Form onSubmit={this.handleSubmit}>
+               <b><Label htmlFor="noteID">Note ID</Label></b>
+                 <Input id="noteID" name="noteID" type="text" placeholder="Enter Note ID here"/>
+                <br></br>
+                 <Label htmlFor="supplier" >Supplier Name</Label>
+                 <Input id="supplier" name="supplier" type="text"  placeholder="Enter Supplier name here"/>
+                 <br></br>
+                 <Label htmlFor="orderQuantity">Ordered Quantity</Label>
+                  <Input id="orderQuantity" name="orderQuantity" type="text" placeholder="Enter Ordered Quantity here"/>
+                  <br></br>
+                  <Label htmlFor="deliveredQuantity">Delivered Quantity</Label>
+                  <Input id="deliveredQuantity" name="deliveredQuantity" type="text" placeholder="Enter Delivered Quantity here"/>
+                  <br></br>
+                  <Label htmlFor="amount">Amount</Label>
+                  <Input id="amount" name="amount" type="text" placeholder="Enter Amount here" />
+                  <br></br>
+                  
+                <Button>Add</Button>
+      </Form>
               </CardBody>
             </Card>
             <br />
             <Card>
-            <CardHeader style={{ backgroundColor: '#397ed0', color: 'white' }}>Drugs</CardHeader>
+            <CardHeader style={{ backgroundColor: '#397ed0', color: 'white' }}>Good Received Notes</CardHeader>
               <CardBody>
-                <CardTitle>Card</CardTitle>
+                <CardTitle></CardTitle>
                 <Table striped responsive bordered size="sm">
                   <thead>
                     <tr>
-                      <th>Drug ID</th>
-                      <th>Drug Name</th>
-                      <th>Quantity</th>
+                      <th>Note ID</th>
+                      <th>Supplier Name</th>
+                      <th>Ordered Quantity</th>
+                      <th>Delivered Quantity</th>
+                      <th>Amount</th>
                       <th></th>
                       <th></th>  
                     </tr>
                   </thead>
                   <tbody>
                     {
-                      this.state.drugs.map((element, index) => {
+                      this.state.grns.map((element, index) => {
                         return <tr key={index}>
-                          <td>{element.drugID}</td>
-                          <td>{element.name}</td>
-                          <td>{element.stock}</td>
+                          <td>{element.noteID}</td>
+                          <td>{element.supplier}</td>
+                          <td>{element.orderQuantity}</td>
+                          <td>{element.deliveredQuantity}</td>
+                          <td>{element.amount}</td>
                           <td><Button color="link" tempdata={element._id} onClick={this.showDetails}>View</Button></td>
+                          {/* <td><Button color="link" tempdata={element._id} onClick={this.goToUpdate}>Update</Button></td> */}
                           <td><Button color="link" tempdata={element._id} onClick={this.handleClick}>Delete</Button></td>
                         </tr>
                       }) 
@@ -109,7 +136,8 @@ class ManageGRN extends Component {
                 </Table>
               </CardBody>
             </Card>
-            <DrugDetails drug={this.state.selectedDrug} open={this.state.modalOpen} toggle={this.toggleModal}/>
+            <GRNDetails grn={this.state.selectedGRN} open={this.state.modalOpen} toggle={this.toggleModal}/>
+            {/* <UpdateDrugs drug ={this.state.selectedDrug} open = {this.state.modalOpen} toggle={this.toggleModal}/> */}
           </div>
         );
       };
