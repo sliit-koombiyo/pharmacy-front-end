@@ -97,7 +97,7 @@ class Login extends Component {
        }
 
       console.log('all fields OK');
-       axios.post("http://localhost:8083/user/register", newUser).then((response) => {
+       axios.post("http://localhost:5001/user/register", newUser).then((response) => {
          if (response.data.success) {
            console.log('response from order API ' + JSON.stringify(response.data));
            this.setState({
@@ -145,7 +145,7 @@ class Login extends Component {
       }
 
       console.log('all fields OK');
-      axios.put("http://localhost:8083/user/:userName", newPassword).then((response) => {
+      axios.put("http://localhost:5001/user/:userName", newPassword).then((response) => {
          if (response.data.success) {
            console.log('response from order API ' + JSON.stringify(response.data));
            this.setState({
