@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter, Table } from 'reactstrap';
 import Axios from 'axios';
+import jsPDF from 'jspdf';
+import * as html2canvas from 'html2canvas';
 import Bill from './Bill'; 
 class Payment extends Component {
   constructor(props) {
@@ -8,6 +10,17 @@ class Payment extends Component {
 
     this.toggle = this.toggle.bind(this);
     this.dispense = this.dispense.bind(this);
+  }
+
+  printBill = () => {
+    const input = document.getElementById('divToPrint');
+    html2canvas(input)
+      .then((canvas) => {
+        const imgData = canvas.toDataURL('image/png');
+        const pdf = new jsPDF();
+        pdf.addImage(imgData, 'JPEG', 0, 0);
+        pdf.save("bill.pdf");
+      });
   }
 
   dispense() {
@@ -27,14 +40,19 @@ class Payment extends Component {
     return (
       <div>
         <Modal isOpen={this.props.open} toggle={this.toggle} className={this.props.className} size="lg">
-          <ModalHeader toggle={this.toggle}>Prescription : {this.props.prescription._id}</ModalHeader>
+          <ModalHeader toggle={this.toggle}>Prescription : {this.props.prescription._id}
+          </ModalHeader>
           <ModalBody>
-            Payments
+          <div className="d-flex justify-content-end">
+            <Button color="primary" style={{marginRight: 10, minWidth: 100}} onClick={this.printBill}> Print </Button>{' '}
+            <Button color="success" style={{marginRight: 10, minWidth: 100}} onClick={this.dispense}>Dispense</Button>{' '}
+            <Button color="danger" style={{marginRight: 10, minWidth: 100}} onClick={this.toggle}>Cancel</Button>
+          </div>
+          <hr/>
             <Bill/>
           </ModalBody>
           <ModalFooter>
-            <Button color="primary" onClick={this.dispense}>Dispense</Button>{' '}
-            <Button color="secondary" onClick={this.toggle}>Cancel</Button>
+            
           </ModalFooter>
         </Modal>
       </div>

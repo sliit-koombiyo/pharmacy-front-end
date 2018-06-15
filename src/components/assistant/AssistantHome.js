@@ -114,15 +114,19 @@ class AssistantHome extends Component {
         </Card>
         <br />
         <Card>
-          <CardHeader style={{ backgroundColor: '#397ed0', color: 'white' }}>Drug Dispense</CardHeader>
+          <CardHeader style={{ backgroundColor: '#397ed0', color: 'white' }}>Drug Stock</CardHeader>
           <CardBody>
-            <CardTitle>Card</CardTitle>
+            <CardTitle>Stock</CardTitle>
             <Table striped responsive bordered size="sm">
               <thead>
                 <tr>
-                  <th>Drug ID</th>
-                  <th>Drug Name</th>
-                  <th>Quantity</th>
+                <th>Drug ID</th>
+                      <th>Drug Name</th>
+                      <th>Drug Stock</th>
+                      <th>Drug Type</th>
+                      <th>Price</th>
+                      <th>Danger Level</th> 
+                      <th>ReorderLevel</th>
 
                 </tr>
               </thead>
@@ -133,18 +137,19 @@ class AssistantHome extends Component {
                     this.state.stocks.map((element, index) => {
                       return <tr key={index}>
                         <td>{element.drugID}</td>
-                        <td>{element.name}</td>
-                        <td>{element.stock}</td>
+                          <td>{element.name}</td>
+                          <td>{element.stock}</td>
+                          <td>{element.type}</td>
+                          <td>{element.price}</td>
+                          <td>{element.dangerlevel}</td>
+                          <td>{element.reorderLevel}</td>
+                          <td>{element.category}</td>
                       </tr>
                     }) : <tr><td></td><td></td><td></td></tr>
                 }
               </tbody>
             </Table>
-            <CardSubtitle>Home subtitle</CardSubtitle>
-            <CardText>Some quick example text to build on the card title and make up the bulk of the card's
-              content.
-              </CardText>
-            <Button>Button</Button>
+            
           </CardBody>
         </Card>
       </div>
