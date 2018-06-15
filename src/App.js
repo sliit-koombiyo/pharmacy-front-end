@@ -7,7 +7,6 @@ import {
   Route, Redirect
 } from 'react-router-dom';
 import {Col} from "reactstrap";
-import Home from "./components/Home/Home";
 import AssistantHome from './components/assistant/AssistantHome';
 import AddDrugs from './components/Drugs/AddDrugs';
 
@@ -33,7 +32,7 @@ class App extends Component {
         exact: true,
         FA_name:"tachometer-alt",
         title: 'Home (chief)',
-        component: () => <Col>CHIEF <Home/></Col>
+        component: () => <Col>CHIEF Home</Col>
       },
       {
         path: '/app/send-requests',

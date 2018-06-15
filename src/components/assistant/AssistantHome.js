@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import * as axios from 'axios';
 import PrescriptionDetails from './PrescriptionDetails';
 import Payment from './Payment';
+import Bill from './Bill';
 import {
   Button,
   Card, CardBody, CardSubtitle, CardText, CardTitle,
@@ -147,6 +148,7 @@ class AssistantHome extends Component {
             <Button>Button</Button>
           </CardBody>
         </Card>
+        <Bill/>
       </div>
     );
   };
