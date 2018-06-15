@@ -10,6 +10,7 @@ import {Col} from "reactstrap";
 import AssistantHome from './components/assistant/AssistantHome';
 import AddDrugs from './components/Drugs/AddDrugs';
 import ManageGRN from './components/chief/ManageGRN';
+import ChiefHome from './components/chief/ChiefHome';
 
 import './App.css';
 import AddDrugBatch from './components/Drugs/AddDrugBatch';
@@ -30,11 +31,11 @@ class App extends Component {
     let routes;
     routes = this.props.chiefMode ? [
       {
-        path: '/app',
+        path: '/app/chiefhome',
         exact: true,
         FA_name:"tachometer-alt",
-        title: 'Home (chief)',
-        component: () => <Col>CHIEF Home</Col>
+        title: 'Chief Home',
+        component: () => <Col><ChiefHome/></Col>
       },
       {
         path: '/app/send-requests',
@@ -60,6 +61,7 @@ class App extends Component {
         title: 'Drug Batch',
         component: () => <Col><AddDrugBatch/></Col>
       },
+     
     ] 
     
     : 
