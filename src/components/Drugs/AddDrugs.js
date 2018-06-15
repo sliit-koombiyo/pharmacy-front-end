@@ -21,13 +21,20 @@ class AddDrugs extends Component {
   
     constructor() {
         super();
-        this.handleSubmit = this.handleSubmit.bind(this);
+      //  this.handleSubmit = this.handleSubmit.bind(this);
         this.state = {
             drugs:[],
             selectedDrug: {},
             modalOpen: false,
             newDrug :{},
-            updateModelOpen:false
+            updateModelOpen:false,
+            drugID:'',
+            name:'',
+            stock:'',
+            type:'',
+            price:'',
+            dangerlevel:'',
+            reorderLevel:''
         }
     }
 
@@ -46,14 +53,38 @@ class AddDrugs extends Component {
             console.log(this.state.drugs);
           });
           
-         
+    }
+    handleChange =(event)=> {
+   //   this.state.toUpdate = event.target.getAttribute('tempdata');
+      this.setState({[event.target.name]:event.target.value} )
+      console.log(this.state.name);
+  
+      this.setState({newDrug:{
+         drugID:this.state.drugID,
+         name:this.state.name,
+         stock:this.state.stock,
+         type:this.state.type,
+         price:this.state.price,
+         dangerlevel:this.state.dangerlevel,
+         reorderLevel:this.state.reorderLevel
+      }
+      });
     }
 
-    handleSubmit(event) {
-      event.preventDefault();
-        const data = new FormData(event.target); // @reeshma This does not work 
-<<<<<<< HEAD
-        console.log("form data : " + JSON.stringify(event.target.drugID.value)) 
+    AddNewDrug=(evt)=>{
+    
+      console.log(this.state.newDrug);
+  
+      axios.post('http://localhost:5000/drugs/',{body:{data:this.newDrug}}).then((res)=>{
+        console.log(res)
+      }).catch((err)=>{
+        console.log(err);
+      });
+      this.toggle();
+    }
+      
+        //const data = new FormData(event.target); // @reeshma This does not work 
+       // console.log("form data : " + JSON.stringify(event.target.drugID.value)) 
     //     event.preventDefault();
 
     //     console.log("form data : " + JSON.stringify(event.target.name.value)) 
@@ -67,20 +98,15 @@ class AddDrugs extends Component {
     //       reorderLevel:event.target.reorderLevel,
     //     }
     //     // try creating an object using the above -> event.target.drugID.value
-    //     //and pass that object to the axios post method
+    //     //and pass that object to the axiosnpm stapost method
     //     console.log("New Drug"+this.state.newDrug);
-=======
-        console.log("form data : " + JSON.stringify(event.target.Name.value)) 
-        // try creating an object using the above -> event.target.drugID.value
-        //and pass that object to the axios post method
->>>>>>> 2c76a374488f61466563c8f168ace08623662694
         
     //     axios.post('http://localhost:5000/Drugs', {data:this.newDrug}).then((result)=>{
     //       console.log(result);
     //     }).catch((err)=>{
     //       console.error(err)
     //     });
-    }
+   // }
 
     showDetails = (evt) => {
         console.log(evt.target.getAttribute('tempdata'));
@@ -93,7 +119,7 @@ class AddDrugs extends Component {
         })
         console.log(this.selected);
         this.setState({selectedDrug: selected}, ()=>{
-          this.toggleModal()
+          this.toggleModal();
        });
        
       }
@@ -113,7 +139,7 @@ class AddDrugs extends Component {
           return drug.drugID == evt.target.getAttribute('tempdata');
         })
         this.setState({selectedDrug: selected}, ()=>{
-          this.toggleModal()
+          this.toggleUpdateModel()
        });
        
       }
@@ -157,7 +183,7 @@ class AddDrugs extends Component {
                   <Label htmlFor="reorderLevel">ReorderLevel</Label>
                   <Input id="reorderLevel" name="reorderLevel" type="text"    placeholder="re Orderlevel" />
                   <br></br> 
-                <Button  type="submit"onClick={this.handleSubmit}>Add</Button>
+                <Button  type="submit"onClick={this.AddNewDrug}>Add</Button>
       </Form>
               </CardBody>
             </Card>
@@ -185,7 +211,7 @@ class AddDrugs extends Component {
                           <td>{element.name}</td>
                           <td>{element.stock}</td>
                           <td><Button color="link" tempdata={element.drugID} onClick={this.showDetails}>View</Button></td>
-                           <td><Button color="link" tempdata={element.drugID} onClick={this.goToUpdate}>Update</Button></td>
+                          <td><Button color="link" tempdata={element.drugID} onClick={this.goToUpdate}>Update</Button></td>
                           <td><Button color="link" tempdata={element.drugID} onClick={this.handledeleteClick}>Delete</Button></td>
                         </tr>
                       }) 
