@@ -8,8 +8,11 @@ class SideNav extends Component {
 
   // TODO: remove this method
   logout = () => {
-    console.log('logging out');
-    this.props.mainLogout();
+    axios.delete("https://koombiyo-pharmacy.herokuapp.com/user/:userName").then((res)=>{
+          console.log(res)
+        }).catch((err)=>{
+          console.log(err);
+        })
   }
 
 
@@ -34,6 +37,8 @@ class SideNav extends Component {
           }
         </Nav>
         <div className="sidebarFiller"></div>
+        <Button onClick={this.deactivate}>Deactivate</Button>
+        <br/> 
         <Button onClick={this.logout}>Logout</Button>
       </div>
     );
