@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import * as html2canvas from 'html2canvas';
-import jsPDF from 'jspdf';
+
 
 
 class Bill extends Component {
@@ -8,26 +7,12 @@ class Bill extends Component {
     super();
   }
 
-  printBill = () => {
-    const input = document.getElementById('divToPrint');
-    html2canvas(input)
-      .then((canvas) => {
-        const imgData = canvas.toDataURL('image/png');
-        const pdf = new jsPDF();
-        pdf.addImage(imgData, 'JPEG', 0, 0);
-        pdf.save("bill.pdf");
-      });
-  }
-
   render() {
     return (<div>
-      <div className="mb5">
-        <button onClick={this.printBill}>Print</button>
-      </div>
       <div id="divToPrint" className="mt4" style={{
         padding: 5,
         backgroundColor: '#f5f5f5',
-        width: '210mm',
+        width: 'auto',
         minHeight: '297mm',
         marginLeft: 'auto',
         marginRight: 'auto'
