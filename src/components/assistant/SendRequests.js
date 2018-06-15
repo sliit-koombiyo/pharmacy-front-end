@@ -29,7 +29,7 @@ class SendRequests extends Component {
   }
 
   componentDidMount() {
-    axios.get('http://localhost:5000/requests').then((response) => {
+    axios.get('https://koombiyo-pharmacy.herokuapp.com/requests').then((response) => {
       console.log(JSON.stringify("request list" + JSON.stringify(response.data.data)));
       this.setState({ requests: response.data.data })
     });
