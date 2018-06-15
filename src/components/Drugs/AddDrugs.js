@@ -52,7 +52,6 @@ class AddDrugs extends Component {
     handleSubmit(event) {
       event.preventDefault();
         const data = new FormData(event.target); // @reeshma This does not work 
-<<<<<<< HEAD
         console.log("form data : " + JSON.stringify(event.target.drugID.value)) 
     //     event.preventDefault();
 
@@ -69,11 +68,6 @@ class AddDrugs extends Component {
     //     // try creating an object using the above -> event.target.drugID.value
     //     //and pass that object to the axios post method
     //     console.log("New Drug"+this.state.newDrug);
-=======
-        console.log("form data : " + JSON.stringify(event.target.Name.value)) 
-        // try creating an object using the above -> event.target.drugID.value
-        //and pass that object to the axios post method
->>>>>>> 2c76a374488f61466563c8f168ace08623662694
         
     //     axios.post('http://localhost:5000/Drugs', {data:this.newDrug}).then((result)=>{
     //       console.log(result);
