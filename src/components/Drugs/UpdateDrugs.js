@@ -41,7 +41,7 @@ class UpdateDrug extends Component {
        
         event.preventDefault();
         const postBody = {
-        id:event.target.id.value,
+        drugID:event.target.drugID.value,
         name: event.target.name.value,
         stock: event.target.stock.value,
         type: event.target.type.value,
@@ -50,9 +50,9 @@ class UpdateDrug extends Component {
     }
 
     const toUpdate = event.target.getAttribute('tempdata'); 
-    console.log("ID to update : " + JSON.stringify(toUpdate));
+    console.log("ID to update : " + JSON.stringify(event.target.drugID.value));
     console.log("form data : " + JSON.stringify(postBody ));
-    Axios.post('http://localhost:5000/drugs/'+toUpdate,{postBody}).then((res)=>{
+    Axios.post('http://localhost:5000/drugs/'+event.target.drugID.value,{postBody}).then((res)=>{
           console.log(res)
         }).catch((err)=>{
           console.log(err);
@@ -84,7 +84,7 @@ class UpdateDrug extends Component {
                 <Form onSubmit={this.handleSubmit}>
                 <Label htmlFor="drugID">Drug ID  :</Label>{"    "}
                 <Label htmlFor="drugID">{this.props.drug.drugID}</Label>
-                <Input id="drugID" name="drugID" type="text" tempdata={this.props.drug.drugID}  placeholder={this.props.drug.drugID} disabled />
+                <Input id="drugID" name="drugID" type="text" value={this.props.drug.drugID}  placeholder={this.props.drug.drugID} disabled />
                 <br></br>
 
                  <Label htmlFor="name">DrugName</Label>
