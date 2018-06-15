@@ -3,6 +3,7 @@ import {
   Input, Button, Label, Card, Alert,
   Modal, ModalHeader, ModalBody, Form, FormGroup
 } from 'reactstrap';
+import {ToastContainer, ToastStore} from 'react-toasts';
 import { decode } from "jsonwebtoken";
 import { Redirect } from "react-router-dom";
 import axios from 'axios';
@@ -74,7 +75,7 @@ class Login extends Component {
         console.log(decodedToken.data.role);
         this.props.mainLogin(decodedToken.data.role === "chief pharmacist");
       } else {
-        console.log("ERROR");
+        ToastStore.warning("invalid credentials");
       }
     }).catch((err)=>{
       console.log("error in api call " + err)
@@ -299,6 +300,7 @@ class Login extends Component {
             </Alert>
           </ModalBody>
         </Modal>
+        <ToastContainer store={ToastStore}/>
       </div>
     );
   }

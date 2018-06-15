@@ -59,6 +59,7 @@ class Payment extends Component {
       console.log("BILL result : " + JSON.stringify(result));
       Axios.post('https://koombiyo-pharmacy.herokuapp.com/prescriptions/dispense', this.props.prescription).then((result)=>{
       console.log(result);
+      this.props.toast("Bill payment registered")
       this.props.refreshPrescriptions()
     }).catch((err)=>{
       console.error(err)
