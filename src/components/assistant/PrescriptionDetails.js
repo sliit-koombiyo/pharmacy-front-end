@@ -3,9 +3,8 @@ import { Button, Modal, ModalHeader, ModalBody, ModalFooter, Table } from 'react
 import Axios from 'axios';
 
 class PrescriptionDetails extends Component {
-  constructor(props) {
-    super(props);
-
+  constructor() {
+    super();
     this.toggle = this.toggle.bind(this);
   }
 

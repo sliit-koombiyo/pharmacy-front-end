@@ -16,7 +16,7 @@
     "react-moment": "^0.7.6",
     "react-pdf": "^3.0.5",
     "react-router-dom": "^4.2.2",
-    "react-scripts": "1.1.4",
+    "react-scripts": "^1.1.4",
     "react-validation": "^3.0.7",
     "reactstrap": "^6.0.1"
   },
