@@ -8,13 +8,17 @@ class SideNav extends Component {
 
   // TODO: remove this method
   logout = () => {
-    axios.delete("https://koombiyo-pharmacy.herokuapp.com/user/:userName").then((res)=>{
+    console.log('deactivated');
+    this.props.mainLogout();
+  }
+
+  deactivate = () => {
+    axios.delete("https://koombio-auth.herokuapp.com/user/:userName").then((res)=>{
           console.log(res)
         }).catch((err)=>{
           console.log(err);
         })
   }
-
 
   render() {
 
