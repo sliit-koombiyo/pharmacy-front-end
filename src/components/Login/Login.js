@@ -216,7 +216,7 @@ class Login extends Component {
               onChange={this.updatePasswordValue}
             />
             <br />
-            <Button Color="primary" onClick={this.login} >Log in</Button>
+            <Button bsStyle="primary" onClick={this.login} >Log in</Button>
             <br />
             <div>
               Don't have an account? - <a style={{ color: "#0069d9" }} onClick={this.toggleModal}>Register here</a>
@@ -261,7 +261,7 @@ class Login extends Component {
                 <Input onChange={this.handleInputChange} type="year" name="inputJoinedYear" id="inputJoinedYear"
                   placeholder="Year Joined" />
               </FormGroup>
-              <Button Color="primary" onClick={this.register} >Register</Button>
+              <Button bsStyle="primary" onClick={this.register} >Register</Button>
             </Form>
             <hr />
             <Alert isOpen={this.state.registerAlertOpen} color="danger">
@@ -292,7 +292,7 @@ class Login extends Component {
                   placeholder="Password" />
               </FormGroup>
               
-              <Button Color="primary" onClick={this.recoverPassword} >Recover Password</Button>
+              <Button bsStyle="primary" onClick={this.recoverPassword} >Recover Password</Button>
             </Form>
             <hr />
             <Alert isOpen={this.state.recoveryAlertOpen} color="danger">
