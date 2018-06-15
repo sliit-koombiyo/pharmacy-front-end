@@ -52,7 +52,7 @@ class GRNDetails extends Component {
             </Table>
           </ModalBody>
           <ModalFooter>
-            <Button color="primary" tempdata={this.props.grn._id} onClick={this.DeleteGRN}>Delete</Button>{' '}
+            {/* <Button color="primary" tempdata={this.props.grn._id} onClick={this.DeleteGRN}>Delete</Button>{' '} */}
             <Button color="secondary" onClick={this.toggle}>Cancel</Button>
           </ModalFooter>
         </Modal>

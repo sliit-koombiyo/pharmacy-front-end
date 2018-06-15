@@ -29,7 +29,7 @@ class ViewRequests extends Component {
     }
 
     componentDidMount(){
-        axios.get('http://localhost:5000/requests').then((response) => {
+        axios.get('https://koombiyo-pharmacy.herokuapp.com/requests').then((response) => {
             console.log(JSON.stringify("requestlist" + JSON.stringify(response.data.data)));
             this.setState({ requests: response.data.data})
           });

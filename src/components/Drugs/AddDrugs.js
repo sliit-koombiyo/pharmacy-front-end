@@ -100,10 +100,15 @@ class AddDrugs extends Component {
         this.refreshDrugs();
       }
 
+<<<<<<< HEAD
     //   AddNewDrug=(evt)=>{
+=======
+    AddNewDrug=(evt)=>{
+>>>>>>> 65ee8d2b9631c162a802bd218dfc0075e9b323f7
     
     //   console.log(this.state.newDrug);
   
+<<<<<<< HEAD
     //   axios.post('http://localhost:5000/drugs/',{body:{data:this.newDrug}}).then((res)=>{
     //     console.log(res)
     //   }).catch((err)=>{
@@ -113,6 +118,41 @@ class AddDrugs extends Component {
     //  this.refreshDrugs();
     // }
     
+=======
+      axios.post('http://localhost:5000/drugs/',{body:{data:this.newDrug}}).then((res)=>{
+        console.log(res)
+      }).catch((err)=>{
+        console.log(err);
+      });
+      this.toggle();
+    }
+      
+        //const data = new FormData(event.target); // @reeshma This does not work 
+       // console.log("form data : " + JSON.stringify(event.target.drugID.value)) 
+    //     event.preventDefault();
+
+    //     console.log("form data : " + JSON.stringify(event.target.name.value)) 
+    //     this.state.newDrug= {
+    //       drugID:event.target.drugID.value,
+    //       name:event.target.name.value,
+    //       stock:event.target.stock,
+    //       type:event.target.type,
+    //       price:event.target.price,
+    //       dangerlevel:event.target.dangerlevel,
+    //       reorderLevel:event.target.reorderLevel,
+    //     }
+    //     // try creating an object using the above -> event.target.drugID.value
+    //     //and pass that object to the axiosnpm stapost method
+    //     console.log("New Drug"+this.state.newDrug);
+        
+    //     axios.post('http://localhost:5000/Drugs', {data:this.newDrug}).then((result)=>{
+    //       console.log(result);
+    //     }).catch((err)=>{
+    //       console.error(err)
+    //     });
+   // }
+
+>>>>>>> 65ee8d2b9631c162a802bd218dfc0075e9b323f7
     showDetails = (evt) => {
         console.log(evt.target.getAttribute('tempdata'));
         

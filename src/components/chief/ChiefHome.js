@@ -25,58 +25,28 @@ class ChiefHome extends Component {
         }
     }
 
-    toggleModal = () => {
-      this.setState({modalOpen: !this.state.modalOpen});
-    }
-
+    
     componentDidMount(){
-        axios.get('http://localhost:5000/drugs').then((response) => {
+        axios.get('https://koombiyo-pharmacy.herokuapp.com/drugs').then((response) => {
             console.log(JSON.stringify("drug list" + JSON.stringify(response.data.data)));
             this.setState({ drugs: response.data.data})
-          });
-          
+          });          
          
     }
 
     handleSubmit(event) {
         event.preventDefault();
-        const data = new FormData(event.target); // @reeshma This does not work 
+        const data = new FormData(event.target);  
         console.log("form data : " + JSON.stringify(event.target.drugID.value)) 
-        // try creating an object using the above -> event.target.drugID.value
-        //and pass that object to the axios post method
         
-        // axios.post("http://localhost:5000/drugs",{data});
-    }
-
-    showDetails = (evt) => {
-        // console.log(evt.target.getAttribute('tempdata'));
-        let selected = this.state.drugs.find((drug)=>{
-          return drug._id === evt.target.getAttribute('tempdata');
-        })
-        this.setState({selectedDrug: selected}, ()=>{
-          this.toggleModal()
-       });
-       
-      }
-      // goToUpdate= (evt) => {
-      //   // console.log(evt.target.getAttribute('tempdata'));
-      //   let selected = this.state.drugs.find((drug)=>{
-      //     return drug._id === evt.target.getAttribute('tempdata');
-      //   })
-      //   this.setState({selectedDrug: selected}, ()=>{
-      //     this.toggleModal()
-      //  });
-       
-      // }
-
+    }     
       
 
     render() {
         return (
             
             <div>            
-           
-            
+                      
             <Card>
             <CardHeader style={{ backgroundColor: '#397ed0', color: 'white' }}>Home</CardHeader>
               <CardBody>

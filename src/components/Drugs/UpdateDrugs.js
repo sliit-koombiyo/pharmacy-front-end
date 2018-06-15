@@ -84,7 +84,7 @@ class UpdateDrug extends Component {
                 <Form onSubmit={this.handleSubmit}>
                 <Label htmlFor="drugID">Drug ID  :</Label>{"    "}
                 <Label htmlFor="drugID">{this.props.drug.drugID}</Label>
-                <Input id="drugID" name="drugID" type="text" placeholder={this.props.drug.drugID} disabled />
+                <Input id="drugID" name="drugID" type="text" tempdata={this.props.drug.drugID}  placeholder={this.props.drug.drugID} disabled />
                 <br></br>
 
                  <Label htmlFor="name">DrugName</Label>
@@ -104,7 +104,7 @@ class UpdateDrug extends Component {
 
                   <Label htmlFor="reorderLevel">ReorderLevel</Label>
                   <Input id="reorderLevel" name="reorderLevel" type="text"  placeholder={this.props.drug.reorderLevel}/>
-                  <Button type="submit"  tempdata={this.props.drug.drugID} value="Update">Update</Button>
+                  <Button type="submit" value="Update">Update</Button>
                   </Form>
                 }
           </ModalBody>
