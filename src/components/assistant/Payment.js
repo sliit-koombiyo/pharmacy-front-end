@@ -50,7 +50,7 @@ class Payment extends Component {
             <Button color="danger" style={{marginRight: 10, minWidth: 100}} onClick={this.toggle}>Cancel</Button>
           </div>
           <hr/>
-            <Bill/>
+            <Bill prescription={this.props.prescription} billTotal="2000"/>
           </ModalBody>
           <ModalFooter>
             
