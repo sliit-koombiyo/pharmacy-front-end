@@ -12,6 +12,7 @@ import AddDrugs from './components/Drugs/AddDrugs';
 import ManageGRN from './components/chief/ManageGRN';
 
 import './App.css';
+import AddDrugBatch from './components/Drugs/AddDrugBatch';
 
 class App extends Component {
 
@@ -59,7 +60,12 @@ class App extends Component {
         title: 'Manage GRN',
         component: () => <Col><ManageGRN/></Col>
       },
-
+      {
+        path: '/app/add_drugBatch',
+        FA_name:"prescription-bottle-alt",
+        title: 'Drug Batch',
+        component: () => <Col><AddDrugBatch/></Col>
+      },
     ] 
     
     : 
