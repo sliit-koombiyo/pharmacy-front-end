@@ -43,12 +43,6 @@ class App extends Component {
         component: () => <Col><h2>CHIEF Send Requests</h2></Col>
       },
       {
-        path: '/app/shoelaces',
-        FA_name:"heartbeat",
-        title: 'Shoe laces (chief)',
-        component: () => <Col><h2>CHIEF Shoelaces</h2></Col>
-      },
-      {
         path: '/app/add_drugs',
         FA_name:"capsules",
         title: 'Add Drugs',
