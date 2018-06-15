@@ -36,3 +36,10 @@ a {
 .linkContainer {
   padding: 20px;
 }
+
+.addCardContainer{
+  width: 45%;
+  margin-left: auto;
+  margin-right: auto; 
+}
+
