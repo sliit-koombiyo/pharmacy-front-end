@@ -1,98 +1,119 @@
-// import React, { Component } from 'react';
-// import * as axios from 'axios';
-// import {
-//     Button,
-//     Card, CardBody, CardSubtitle, CardText, CardTitle,
-//     CardHeader, CardFooter, Table
-// } from 'reactstrap';
+import React, { Component } from 'react';
+import * as axios from 'axios';
+import {
+    Button,
+    Card, CardBody, CardSubtitle, CardText, CardTitle,
+    CardHeader, CardFooter, Table
+} from 'reactstrap';
+import DrugDetails from './DrugDetails';
 
-// class AddDrugs extends Component {
+class ManageGRN extends Component {
 
-//     constructor() {
-//         super();
-//         this.handleSubmit = this.handleSubmit.bind(this);
-//         this.state = {
-//         }
-//     }
+    constructor() {
+        super();
+        this.handleSubmit = this.handleSubmit.bind(this);
+        this.state = {
+            grns:[],
+            selectedDGRN: {},
+            modalOpen: false
+        }
+    }
 
-//     handleSubmit(event) {
-//         event.preventDefault();
-//         const data = new FormData(event.target);
-//         axios.post("http://localhost:5000/drugs",{body:data});
-//     }
+    toggleModal = () => {
+      this.setState({modalOpen: !this.state.modalOpen});
+    }
 
-//     render() {
-//         return (
-//           <div>
-//             <Card>
-//               <CardHeader style={{ backgroundColor: '#397ed0', color: 'white' }}>Add Drugs</CardHeader>
-//               <CardBody>
-//               <form onSubmit={this.handleSubmit}>
-//                 <label htmlFor="drugID">Enter DrugID</label>
-//                  <input id="drugID" name="drugID" type="text" />
+    componentDidMount(){
+        axios.get('http://localhost:5000/grn').then((response) => {
+            console.log(JSON.stringify("grn list" + JSON.stringify(response.data.data)));
+            this.setState({ drugs: response.data.data})
+          })
+    }
 
-//                     <label htmlFor="name">Enter DrugName</label>
-//                      <input id="name" name="name" type="text" />
+    handleSubmit(event) {
+        event.preventDefault();
+        const data = new FormData(event.target);
+        axios.post("http://localhost:5000/grn",{body:data});
+    }
 
-//                     <label htmlFor="stock">Enter stock</label>
-//                   <input id="stock" name="stock" type="text" />
+    showDetails = (evt) => {
+        // console.log(evt.target.getAttribute('tempdata'));
+        let selected = this.state.drugs.find((drug)=>{
+          return drug._id === evt.target.getAttribute('tempdata');
+        })
+        this.setState({selectedDrug: selected}, ()=>{
+          this.toggleModal()
+       });
+       
+      }
 
-//                   <label htmlFor="type">Enter type</label>
-//                   <input id="type" name="type" type="text" />
+    render() {
+        return (
+          <div>
+            <Card>
+              <CardHeader style={{ backgroundColor: '#397ed0', color: 'white' }}>Add Drugs</CardHeader>
+              <CardBody>
+              <form onSubmit={this.handleSubmit}>
+                <label htmlFor="drugID">DrugID</label>
+                 <input id="drugID" name="drugID" type="text" />
 
-//                   <label htmlFor="price">Enter price</label>
-//                   <input id="price" name="price" type="text" />
+                 <label htmlFor="name">DrugName</label>
+                 <input id="name" name="name" type="text" />
 
-//                    <label htmlFor="dangerlevel">Enter dangerlevel</label>
-//                   <input id="dangerlevel" name="dangerlevel" type="text" />
+                 <label htmlFor="stock">stock</label>
+                  <input id="stock" name="stock" type="text" />
 
-//                   <label htmlFor="reorderLevel">Enter reorderLevel</label>
-//                   <input id="reorderLevel" name="reorderLevel" type="text" />
+                  <label htmlFor="type">Type</label>
+                  <input id="type" name="type" type="text" />
 
-                 
+                  <label htmlFor="price">Price</label>
+                  <input id="price" name="price" type="text" />
 
-//              <button>Send data!</button>
-//       </form>
-//               </CardBody>
-//             </Card>
-//             <br />
-//             <Card>
-//             <CardHeader style={{ backgroundColor: '#397ed0', color: 'white' }}>Drug Dispense</CardHeader>
-//               <CardBody>
-//                 <CardTitle>Card</CardTitle>
-//                 <Table striped responsive bordered size="sm">
-//                   <thead>
-//                     <tr>
-//                       <th>Drug ID</th>
-//                       <th>Drug Name</th>
-//                       <th>Quantity</th>
-                      
-//                     </tr>
-//                   </thead>
-//                   <tbody>
-//                     {
-//                       this.state.stocks.map((element, index) => {
-//                         return <tr key={index}>
-//                           <td>{element.drugID}</td>
-//                           <td>{element.name}</td>
-//                           <td>{element.stock}</td>
-                        
-//                         </tr>
-//                       })
-//                     }
-//                   </tbody>
-//                 </Table>
-//                 <CardSubtitle>Home subtitle</CardSubtitle>
-//                 <CardText>Some quick example text to build on the card title and make up the bulk of the card's
-//                   content.
-//                   </CardText>
-//                 <Button>Button</Button>
-//               </CardBody>
-//             </Card>
-//           </div>
-//         );
-//       };
+                   <label htmlFor="dangerlevel">Dangerlevel</label>
+                  <input id="dangerlevel" name="dangerlevel" type="text" />
+
+                  <label htmlFor="reorderLevel">ReorderLevel</label>
+                  <input id="reorderLevel" name="reorderLevel" type="text" />
+                <button>Add</button>
+      </form>
+              </CardBody>
+            </Card>
+            <br />
+            <Card>
+            <CardHeader style={{ backgroundColor: '#397ed0', color: 'white' }}>Drugs</CardHeader>
+              <CardBody>
+                <CardTitle>Card</CardTitle>
+                <Table striped responsive bordered size="sm">
+                  <thead>
+                    <tr>
+                      <th>Drug ID</th>
+                      <th>Drug Name</th>
+                      <th>Quantity</th>
+                      <th></th>
+                      <th></th>  
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {
+                      this.state.drugs.map((element, index) => {
+                        return <tr key={index}>
+                          <td>{element.drugID}</td>
+                          <td>{element.name}</td>
+                          <td>{element.stock}</td>
+                          <td><Button color="link" tempdata={element._id} onClick={this.showDetails}>View</Button></td>
+                          <td><Button color="link" tempdata={element._id} onClick={this.handleClick}>Delete</Button></td>
+                        </tr>
+                      }) 
+                    }
+                  </tbody>
+                </Table>
+              </CardBody>
+            </Card>
+            <DrugDetails drug={this.state.selectedDrug} open={this.state.modalOpen} toggle={this.toggleModal}/>
+          </div>
+        );
+      };
     
-//     }
+    }
 
-// export default AddDrugs; 
+export default ManageGRN; 
