@@ -7,14 +7,9 @@ import FA from "react-fontawesome";
 class SideNav extends Component {
 
   // TODO: remove this method
-  changeChiefMode = () => {
-    console.log('changeChiefMode');
-    this.props.toggleChiefMode()
-  }
-  // TODO: remove this method
   logout = () => {
     console.log('logging out');
-    this.props.toggleLogin();
+    this.props.mainLogout();
   }
 
 
@@ -38,8 +33,6 @@ class SideNav extends Component {
 
           }
         </Nav>
-        {/*TODO: remove this button*/}
-        <Button onClick={this.changeChiefMode}>changeMode</Button>
         <div className="sidebarFiller"></div>
         <Button onClick={this.logout}>Logout</Button>
       </div>

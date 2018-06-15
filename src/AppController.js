@@ -20,11 +20,24 @@ class AppController extends Component {
     //TODO: Change this method to provide proper authentication 
     //(can send chief mode inside a JWT token)
 
-  toggleLogin = () => {
+  mainLogin = (chiefmode) => {
     this.setState({
-      authenticated: !this.state.authenticated
+      authenticated: true,
+      chiefMode: chiefmode
     });
-  } //TODO: Change this method to provide proper authentication (can use jwt verify)
+  }
+
+  mainLogout = () => {
+    this.setState({
+      authenticated: false
+    });
+  }
+
+  // toggleLogin = () => {
+  //   this.setState({
+  //     authenticated: !this.state.authenticated
+  //   });
+  // } //TODO: Change this method to provide proper authentication (can use jwt verify)
 
   render() {
     /** 
@@ -36,6 +49,8 @@ class AppController extends Component {
       authenticated={this.state.authenticated}
       chiefMode={this.state.chiefMode}
       toggleLogin={this.toggleLogin}
+      mainLogin={this.mainLogin}
+      mainLogout={this.mainLogout}
       toggleChiefMode={this.toggleChiefMode}
     />;
   }

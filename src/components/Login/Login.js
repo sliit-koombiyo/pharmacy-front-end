@@ -3,6 +3,7 @@ import {
   Input, Button, Label, Card, Alert,
   Modal, ModalHeader, ModalBody, Form, FormGroup
 } from 'reactstrap';
+import { decode } from "jsonwebtoken";
 import { Redirect } from "react-router-dom";
 import axios from 'axios';
 
@@ -65,7 +66,20 @@ class Login extends Component {
 
   login = () => {
     console.log('login called');
-    this.props.toggleLogin();
+    axios.post('https://koombio-auth.herokuapp.com/auth', {username: this.state.username, password: this.state.password}).then((result)=>{
+      if(result.data.success) {
+        console.log(result.data);
+        localStorage.setItem("x-pharmacy-token", result.data.token);
+        const decodedToken = decode(result.data.token);
+        console.log(decodedToken.data.role);
+        this.props.mainLogin(decodedToken.data.role === "chief pharmacist");
+      } else {
+        console.log("ERROR");
+      }
+    }).catch((err)=>{
+      console.log("error in api call " + err)
+    })
+    // this.props.mainLogin();
     this.setState({ redirectToReferrer: true });
   };
 

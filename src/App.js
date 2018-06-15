@@ -122,7 +122,7 @@ class App extends Component {
           <Route path='/login'
                  render={
                    routeProps => <Login {...routeProps} authenticated={this.props.authenticated}
-                                        toggleLogin={this.props.toggleLogin}/>
+                                        toggleLogin={this.props.toggleLogin} mainLogin={this.props.mainLogin} mainLogout={this.props.mainLogout}/>
                  }
           />
 
@@ -133,7 +133,7 @@ class App extends Component {
             routes={routes}
             chiefMode={this.props.chiefMode}
             toggleChiefMode={this.props.toggleChiefMode}
-            toggleLogin={this.props.toggleLogin}
+            mainLogout={this.props.mainLogout}
           />
 
           <PrivateRoute
@@ -142,6 +142,7 @@ class App extends Component {
             routes={routes}
             toggleChiefMode={this.props.toggleChiefMode}
             toggleLogin={this.props.toggleLogin}
+            mainLogout={this.props.mainLogout}
           />
 
           <PrivateRoute
