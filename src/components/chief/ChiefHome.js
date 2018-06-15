@@ -80,7 +80,7 @@ class ChiefHome extends Component {
             <Card>
             <CardHeader style={{ backgroundColor: '#397ed0', color: 'white' }}>Home</CardHeader>
               <CardBody>
-                <CardTitle>Welcome </CardTitle>
+                <CardTitle>Welcome to Stock </CardTitle>
                 <Table striped responsive bordered size="sm">
                   <thead>
                     <tr>

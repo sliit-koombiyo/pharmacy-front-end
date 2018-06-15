@@ -11,6 +11,8 @@ import AssistantHome from './components/assistant/AssistantHome';
 import AddDrugs from './components/Drugs/AddDrugs';
 import ManageGRN from './components/chief/ManageGRN';
 import ChiefHome from './components/chief/ChiefHome';
+import ViewRequests from './components/chief/ViewRequests';
+import SendRequests from './components/assistant/SendRequests';
 
 import './App.css';
 import AddDrugBatch from './components/Drugs/AddDrugBatch';
@@ -40,8 +42,8 @@ class App extends Component {
       {
         path: '/app/send-requests',
         FA_name:"stethoscope",
-        title: 'Send Requests (chief)',
-        component: () => <Col><h2>CHIEF Send Requests</h2></Col>
+        title: 'View Requests',
+        component: () => <Col><ViewRequests/></Col>
       },
       {
         path: '/app/add_drugs',
@@ -71,21 +73,16 @@ class App extends Component {
         path: '/app',
         exact: true,
         FA_name:"tachometer-alt",
-        title: 'Home',
+        title: 'Assistant Home',
         component: () => <Col><AssistantHome/></Col>
-      },
-      {
-        path: '/app/send-requests',
-        FA_name:"stethoscope",
-        title: 'Send Requests',
-        component: () => <Col><h2>Send Requests</h2></Col>
       },
       {
         path: '/app/shoelaces',
         FA_name:"heartbeat",
-        title: 'Shoe laces',
-        component: () => <Col><h2>Shoelaces</h2></Col>
+        title: 'Send Requests',
+        component: () => <Col><SendRequests/></Col>
       },
+      
     ];
 
     /** this is a wrapper for <Route> which enables 
