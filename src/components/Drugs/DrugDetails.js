@@ -9,21 +9,26 @@ class DrugDetails extends Component {
     this.toggle = this.toggle.bind(this);
   }
 
+  refreshDrugs(){
+    this.props.refreshDrugs()
+  }  
   toggle() {
     this.props.toggle()
+    
   }
+ //This works -------------------//
   DeleteDrug=(evt)=>{
-    console.log(evt.target.getAttribute('tempdata'));
-    const todelete = evt.target.getAttribute('tempdata');
-    Axios.delete("http://localhost:5000/drugs/"+todelete).then((res)=>{
+    // console.log(evt.target.getAttribute('tempdata'));
+    // const todelete = evt.target.getAttribute('tempdata');
+    Axios.delete("http://localhost:5000/drugs/"+this.props.drug._id).then((res)=>{
       console.log(res)
     }).catch((err)=>{
       console.log(err);
     })
     this.toggle();
-    
+    this.refreshDrugs(); 
   }
-
+//---------------------//
   render() {
     return (
       <div>

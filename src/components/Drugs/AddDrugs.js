@@ -3,7 +3,7 @@ import * as axios from 'axios';
 import {
     Button,Label,Input,
     Card, CardBody, CardSubtitle, CardText, CardTitle,
-    CardHeader, CardFooter, Table,Form
+    CardHeader, CardFooter, Table,Form,ModalFooter
 } from 'reactstrap';
 import * as html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
@@ -46,12 +46,22 @@ class AddDrugs extends Component {
       this.setState({updateModelOpen:!this.state.updateModelOpen});
     }
 
+    refreshDrugs = () => {
+      axios.get('http://localhost:5000/drugs').then((response) => {
+        console.log(JSON.stringify("drug list" + JSON.stringify(response.data.data)));
+        this.setState({ drugs: response.data.data}, () => {
+          console.log("Drug Page refreshed" + this.state.drugs);
+        })
+      })
+    }
+
     componentDidMount(){
-        axios.get('http://localhost:5000/drugs').then((response) => {
-            console.log(JSON.stringify("drug list" + JSON.stringify(response.data.data)));
-            this.setState({ drugs: response.data.data})
-            console.log(this.state.drugs);
-          });
+      this.refreshDrugs();
+        // axios.get('http://localhost:5000/drugs').then((response) => {
+        //     console.log(JSON.stringify("drug list" + JSON.stringify(response.data.data)));
+        //     this.setState({ drugs: response.data.data})
+        //     console.log(this.state.drugs);
+        //   });
           
     }
     handleChange =(event)=> {
@@ -70,51 +80,39 @@ class AddDrugs extends Component {
       }
       });
     }
+      handleSubmit=(event)=>{
+        event.preventDefault();
+        const postBody = {
+          drugID:event.target.drugID.value,
+          name: event.target.name.value,
+          stock: event.target.stock.value,
+        //  type: event.target.type.value,
+          price: event.target.price.value,
+          dangerlevel: event.target.dangerlevel.value,
+          reorderLevel: event.target.reorderLevel.value
+        }
+        console.log("New Drug to add"+JSON.stringify(postBody));
+        axios.post("http://localhost:5000/drugs",{data:postBody}).then((res)=>{
+          console.log(res)
+        }).catch((err)=>{
+          console.log(err);
+        });
+        this.refreshDrugs();
+      }
 
-<<<<<<< HEAD
-    AddNewDrug=(evt)=>{
+    //   AddNewDrug=(evt)=>{
     
-      console.log(this.state.newDrug);
+    //   console.log(this.state.newDrug);
   
-      axios.post('http://localhost:5000/drugs/',{body:{data:this.newDrug}}).then((res)=>{
-        console.log(res)
-      }).catch((err)=>{
-        console.log(err);
-      });
-      this.toggle();
-    }
-      
-        //const data = new FormData(event.target); // @reeshma This does not work 
-       // console.log("form data : " + JSON.stringify(event.target.drugID.value)) 
-=======
-    handleSubmit(event) {
-      event.preventDefault();
-        const data = new FormData(event.target); // @reeshma This does not work 
-        console.log("form data : " + JSON.stringify(event.target.drugID.value)) 
->>>>>>> 33b97c3248d6dc70c42216493e8b41cbcf9e3038
-    //     event.preventDefault();
-
-    //     console.log("form data : " + JSON.stringify(event.target.name.value)) 
-    //     this.state.newDrug= {
-    //       drugID:event.target.drugID.value,
-    //       name:event.target.name.value,
-    //       stock:event.target.stock,
-    //       type:event.target.type,
-    //       price:event.target.price,
-    //       dangerlevel:event.target.dangerlevel,
-    //       reorderLevel:event.target.reorderLevel,
-    //     }
-    //     // try creating an object using the above -> event.target.drugID.value
-    //     //and pass that object to the axiosnpm stapost method
-    //     console.log("New Drug"+this.state.newDrug);
-        
-    //     axios.post('http://localhost:5000/Drugs', {data:this.newDrug}).then((result)=>{
-    //       console.log(result);
-    //     }).catch((err)=>{
-    //       console.error(err)
-    //     });
-   // }
-
+    //   axios.post('http://localhost:5000/drugs/',{body:{data:this.newDrug}}).then((res)=>{
+    //     console.log(res)
+    //   }).catch((err)=>{
+    //     console.log(err);
+    //   });
+    //  // this.toggle();
+    //  this.refreshDrugs();
+    // }
+    
     showDetails = (evt) => {
         console.log(evt.target.getAttribute('tempdata'));
         
@@ -130,16 +128,20 @@ class AddDrugs extends Component {
        });
        
       }
+      //Working function///
       handledeleteClick= (evt)=>{
-        console.log(evt.target.getAttribute('tempdata'));
-        const todelete = evt.target.getAttribute('tempdata');
-        axios.delete("http://localhost:5000/drugs/"+todelete).then((res)=>{
+       
+       let selected = this.state.drugs.find((drug)=>{
+        return drug.drugID == evt.target.getAttribute('tempdata');
+      });
+        axios.delete("http://localhost:5000/drugs/"+selected._id).then((res)=>{
           console.log(res)
         }).catch((err)=>{
           console.log(err);
         })
+        this.refreshDrugs();
       };
-
+    //----------------------///
       goToUpdate= (evt) => {
         // console.log(evt.target.getAttribute('tempdata'));
         let selected = this.state.drugs.find((drug)=>{
@@ -160,7 +162,7 @@ class AddDrugs extends Component {
             pdf.save("bill.pdf");
           });
       }
-      
+    
 
     render() {
         return (
@@ -176,23 +178,27 @@ class AddDrugs extends Component {
                  <Input id="name" name="name" type="text"  placeholder="Drug name"/>
                  <br></br>
                  <Label htmlFor="stock">stock</Label>
-                  <Input id="stock" name="stock" type="text"  placeholder="stock"/>
+                  <Input id="stock" name="stock" type="text"  placeholder="stock" />
                   <br></br>
                   <Label htmlFor="type">Type</Label>
-                  <Dropdown options={DropDownFortypes} onChange={this._onSelect} value={defaultOption} placeholder="Select an option" />
+                  <Dropdown options={DropDownFortypes} onChange={this._onSelect} value={defaultOption} placeholder="Select an option"/>
                   <br></br>
                   <Label htmlFor="price">Price</Label>
-                  <Input id="price" name="price" type="text" value={this.state.price}  placeholder="price" />
+                  <Input id="price" name="price" type="text" value={this.state.price}  placeholder="price"/>
                   <br></br>
                    <Label htmlFor="dangerlevel">Dangerlevel</Label>
-                  <Input id="dangerlevel" name="dangerlevel" type="text"   placeholder="Danger Level" />
+                  <Input id="dangerlevel" name="dangerlevel" type="text"   placeholder="Danger Level"/>
                   <br></br>
                   <Label htmlFor="reorderLevel">ReorderLevel</Label>
-                  <Input id="reorderLevel" name="reorderLevel" type="text"    placeholder="re Orderlevel" />
+                  <Input id="reorderLevel" name="reorderLevel" type="text"   placeholder="re-orderlevel"/>
                   <br></br> 
-                <Button  type="submit"onClick={this.AddNewDrug}>Add</Button>
-      </Form>
+                  <Button type="Submit">Add</Button>
+                   </Form>
               </CardBody>
+              <ModalFooter>
+            <Button color="primary" onClick={this.AddNewDrug}>Add</Button>{' '}
+            <Button color="secondary" onClick={this.toggle}>Cancel</Button>
+          </ModalFooter>
             </Card>
             <br />
             <Card id="divToPrint">
@@ -227,8 +233,8 @@ class AddDrugs extends Component {
                 </Table>
               </CardBody>
             </Card>
-            <DrugDetails drug={this.state.selectedDrug} open={this.state.modalOpen} toggle={this.toggleModal}/>
-            <UpdateDrugs drug ={this.state.selectedDrug} open = {this.state.updateModelOpen} toggle={this.toggleUpdateModel}/>
+            <DrugDetails drug={this.state.selectedDrug} open={this.state.modalOpen} toggle={this.toggleModal}  refreshDrugs={this.refreshDrugs}/>
+            <UpdateDrugs drug ={this.state.selectedDrug} open = {this.state.updateModelOpen} toggle={this.toggleUpdateModel}  refreshDrugs={this.refreshDrugs}/>
             <div className="Button">
             <br></br>
             <Button onClick={this.printBill}>Generate Report</Button>
