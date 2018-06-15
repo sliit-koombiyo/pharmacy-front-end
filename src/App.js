@@ -46,6 +46,7 @@ class App extends Component {
         title: 'View Requests',
         component: () => <Col><ViewRequests/></Col>
       },
+     
       {
         path: '/app/add_drugs',
         FA_name:"capsules",
