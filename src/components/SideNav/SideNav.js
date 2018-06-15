@@ -42,9 +42,10 @@ class SideNav extends Component {
           }
         </Nav>
         <div className="sidebarFiller"></div>
-        <Button onClick={this.deactivate}>Deactivate</Button>
+        <Button color="primary" onClick={this.deactivate}>Deactivate</Button>
         <br/> 
-        <Button onClick={this.logout}>Logout</Button>
+        <br />
+        <Button color="primary" onClick={this.logout}>Logout</Button>
       </div>
     );
 
