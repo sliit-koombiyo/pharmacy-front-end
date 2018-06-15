@@ -4,6 +4,7 @@ import {
   Modal, ModalHeader, ModalBody, Form, FormGroup
 } from 'reactstrap';
 import { Redirect } from "react-router-dom";
+import axios from 'axios';
 
 class Login extends Component {
 
@@ -14,8 +15,14 @@ class Login extends Component {
       registerModalOpen: false,
       registerAlertOpen: false,
       registerAlertText: '',
+      recoveryModalOpen: false,
+      recoveryAlertOpen: false,
+      recoveryAlertText: '',
+      EmpID: '',
       username: '',
       password: '',
+      role: '',
+      joinedYear: '',
       errorOpen: false,
       errorText: '',
       alertColor: 'danger'
@@ -50,48 +57,55 @@ class Login extends Component {
     })
   };
 
+  toggleModal1 = () => {
+    this.setState({
+      recoveryModalOpen: !this.state.recoveryModalOpen
+    })
+  };
+
   login = () => {
     console.log('login called');
     this.props.toggleLogin();
     this.setState({ redirectToReferrer: true });
   };
 
+
   register = () => {
 
-    if (this.state.inputUsername && this.state.inputPassword && this.state.inputEmail && this.state.inputPhone) {
-      // const newUser = {
-      //   username: this.state.inputUsername,
-      //   password: this.state.inputPassword,
-      //   email: this.state.inputEmail,
-      //   phone: this.state.inputPhone,
-      //   admin: false
-      // }
+    if (this.state.inputEmpID && this.state.inputUsername && this.state.inputPassword && this.state.inputRole && this.state.inputJoinedYear) {
+       const newUser = {
+         EmpID: this.state.inputEmpID,
+         username: this.state.inputUsername,
+         password: this.state.inputPassword,
+         role: this.state.inputRole,
+         joinedYear: this.state.inputJoinedYear
+       }
 
       console.log('all fields OK');
-      // axios.post(appConfigs.REGISTRATION_URL, newUser).then((response) => {
-      //   if (response.data.success) {
-      //     console.log('response from order API ' + JSON.stringify(response.data));
-      //     this.setState({
-      //       errorText: 'Registration Successful! Login with your new credentials',
-      //       errorOpen: true,
-      //       alertColor: 'success'
-      //     });
-      //     this.toggleModal();
-      //   } else {
-      //     this.setState({
-      //       registerAlertOpen: true,
-      //       registerAlertText: response.data.err
-      //     }, () => {
-      //       setTimeout(() => {
-      //         this.setState({
-      //           registerAlertOpen: false
-      //         })
-      //       }, 4000)
-      //     });
-      //   }
-      // }).catch(function (error) {
-      //   console.log('error in API call ' + JSON.stringify(error.message));
-      // });
+       axios.post("http://localhost:8083/user/register", newUser).then((response) => {
+         if (response.data.success) {
+           console.log('response from order API ' + JSON.stringify(response.data));
+           this.setState({
+             errorText: 'Registration Successful! Login with your new credentials',
+             errorOpen: true,
+             alertColor: 'success'
+           });
+           this.toggleModal1();
+         } else {
+           this.setState({
+             registerAlertOpen: true,
+             registerAlertText: response.data.err
+           }, () => {
+             setTimeout(() => {
+               this.setState({
+                 registerAlertOpen: false
+               })
+             }, 400)
+           });
+         }
+       }).catch(function (error) {
+         console.log('error in API call ' + JSON.stringify(error.message));
+       });
 
     } else {
       this.setState({
@@ -101,6 +115,54 @@ class Login extends Component {
         setTimeout(() => {
           this.setState({
             registerAlertOpen: false
+          })
+        }, 4000)
+      });
+    }
+  };
+
+  recoverPassword =()=>{
+    if (this.state.inputEmpID && this.state.inputUsername && this.state.inputPassword) {
+      const newPassword = {
+        EmpID: this.state.inputEmpID,
+        username: this.state.inputUsername,
+        password: this.state.inputPassword
+      }
+
+      console.log('all fields OK');
+      axios.put("http://localhost:8083/user/:userName", newPassword).then((response) => {
+         if (response.data.success) {
+           console.log('response from order API ' + JSON.stringify(response.data));
+           this.setState({
+             errorText: 'Password Recovery Successful! Login with your new credentials',
+             errorOpen: true,
+             alertColor: 'success'
+           });
+           this.toggleModal1();
+         } else {
+           this.setState({
+             recoveryAlertOpen: true,
+             recoveryAlertText: response.data.err
+           }, () => {
+             setTimeout(() => {
+               this.setState({
+                 recoveryAlertOpen: false
+               })
+             }, 4000)
+           });
+         }
+       }).catch(function (error) {
+         console.log('error in API call ' + JSON.stringify(error.message));
+       });
+
+    } else {
+      this.setState({
+        recoveryAlertOpen: true,
+        recoveryAlertText: 'all fields must be filled'
+      }, () => {
+        setTimeout(() => {
+          this.setState({
+            recoveryAlertOpen: false
           })
         }, 4000)
       });
@@ -144,15 +206,26 @@ class Login extends Component {
             <div>
               Don't have an account? - <a style={{ color: "#0069d9" }} onClick={this.toggleModal}>Register here</a>
             </div>
+            <div>
+              Forgot Password? - <a style={{ color: "#0069d9" }} onClick={this.toggleModal1}>Recover here</a>
+            </div>
             <Alert isOpen={this.state.errorOpen} color={this.state.alertColor}>
               {this.state.errorText}
             </Alert>
           </div>
         </Card>
+
+  
+
         <Modal isOpen={this.state.registerModalOpen} toggle={this.toggleModal} className={this.props.className}>
           <ModalHeader toggle={this.toggleModal}>Welcome New User!</ModalHeader>
           <ModalBody>
             <Form>
+            <FormGroup>
+                <Label for="inputEmpID">Employee ID</Label>
+                <Input onChange={this.handleInputChange} type="text" name="inputEmpID" id="inputEmpID"
+                  placeholder="EmployeeID" />
+              </FormGroup>
               <FormGroup>
                 <Label for="inputUsername">Username</Label>
                 <Input onChange={this.handleInputChange} type="text" name="inputUsername" id="inputUsername"
@@ -164,20 +237,51 @@ class Login extends Component {
                   placeholder="Password" />
               </FormGroup>
               <FormGroup>
-                <Label for="inputEmail">E-Mail Address</Label>
-                <Input onChange={this.handleInputChange} type="email" name="inputEmail" id="inputEmail"
-                  placeholder="user@example.com" />
+                <Label for="inputRole">Designation</Label>
+                <Input onChange={this.handleInputChange} type="text" name="inputRole" id="inputRole"
+                  placeholder="Designation" />
               </FormGroup>
               <FormGroup>
-                <Label for="inputPhone">Phone Number</Label>
-                <Input onChange={this.handleInputChange} type="email" name="inputPhone" id="inputPhone"
-                  placeholder="Phone" />
+                <Label for="inputJoinedYear">Year Joined</Label>
+                <Input onChange={this.handleInputChange} type="year" name="inputJoinedYear" id="inputJoinedYear"
+                  placeholder="Year Joined" />
               </FormGroup>
               <Button name="registerBtn" onClick={this.register}>Register</Button>
             </Form>
             <hr />
             <Alert isOpen={this.state.registerAlertOpen} color="danger">
               {this.state.registerAlertText}
+            </Alert>
+          </ModalBody>
+        </Modal >
+
+    
+
+        <Modal isOpen={this.state.recoveryModalOpen} toggle={this.toggleModal1} className={this.props.className}>
+        <ModalHeader toggle={this.toggleModal1}>Password Recovery</ModalHeader>
+          <ModalBody>
+            <Form>
+            <FormGroup>
+                <Label for="inputEmpID">Employee ID</Label>
+                <Input onChange={this.handleInputChange} type="text" name="inputEmpID" id="inputEmpID"
+                  placeholder="EmployeeID" />
+              </FormGroup>
+              <FormGroup>
+                <Label for="inputUsername">Username</Label>
+                <Input onChange={this.handleInputChange} type="text" name="inputUsername" id="inputUsername"
+                  placeholder="Username" />
+              </FormGroup>
+              <FormGroup>
+                <Label for="inputPassword">Password</Label>
+                <Input onChange={this.handleInputChange} type="password" name="inputPassword" id="inputPassword"
+                  placeholder="Password" />
+              </FormGroup>
+              
+              <Button name="recoveryBtn" onClick={this.recoverPassword}>Recover Password</Button>
+            </Form>
+            <hr />
+            <Alert isOpen={this.state.recoveryAlertOpen} color="danger">
+              {this.state.recoveryAlertText}
             </Alert>
           </ModalBody>
         </Modal>

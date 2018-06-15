@@ -15,7 +15,7 @@ class DrugDetails extends Component {
   DeleteDrug=(evt)=>{
     console.log(evt.target.getAttribute('tempdata'));
     const todelete = evt.target.getAttribute('tempdata');
-    Axios.delete("http://localhost/drugs/"+todelete).then((res)=>{
+    Axios.delete("http://localhost:5000/drugs/"+todelete).then((res)=>{
       console.log(res)
     }).catch((err)=>{
       console.log(err);
@@ -28,7 +28,7 @@ class DrugDetails extends Component {
     return (
       <div>
         <Modal isOpen={this.props.open} toggle={this.toggle} className={this.props.className} size="lg">
-          <ModalHeader toggle={this.toggle}>Prescription : {this.props.name}</ModalHeader>
+          <ModalHeader toggle={this.toggle}>Drug : {this.props.drug.name}</ModalHeader>
           <ModalBody>
             <Table striped responsive bordered size="sm">
               <thead>
@@ -52,7 +52,7 @@ class DrugDetails extends Component {
             </Table>
           </ModalBody>
           <ModalFooter>
-            <Button color="primary" tempdata={this.props.drug._id} onClick={this.DeleteDrug}>Delete</Button>{' '}
+            <Button color="primary" tempdata={this.props.drug.drugID} onClick={this.DeleteDrug}>Delete</Button>{' '}
             <Button color="secondary" onClick={this.toggle}>Cancel</Button>
           </ModalFooter>
         </Modal>

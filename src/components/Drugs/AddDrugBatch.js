@@ -88,7 +88,7 @@ class AddDrugBatch extends Component {
     render() {
         return (
           <div>
-            <Card>
+            <Card className="addCardContainer">
               <CardHeader style={{ backgroundColor: '#397ed0', color: 'white' }}>Add Drug Batch</CardHeader>
               <CardBody>
               <Form onSubmit={this.handleSubmit}>

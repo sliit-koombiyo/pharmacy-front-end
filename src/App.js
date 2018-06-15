@@ -16,6 +16,7 @@ import SendRequests from './components/assistant/SendRequests';
 
 import './App.css';
 import AddDrugBatch from './components/Drugs/AddDrugBatch';
+import StockReport from './components/assistant/StockReport';
 
 class App extends Component {
 
@@ -81,6 +82,12 @@ class App extends Component {
         FA_name:"heartbeat",
         title: 'Send Requests',
         component: () => <Col><SendRequests/></Col>
+      },
+      {
+        path: '/app/stock_report',
+        FA_name:"heartbeat",
+        title: 'Stock Report',
+        component: () => <Col><StockReport/></Col>
       },
       
     ];
