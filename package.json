@@ -5,11 +5,16 @@
   "dependencies": {
     "axios": "^0.18.0",
     "bootstrap": "^4.1.1",
+    "moment": "^2.22.2",
     "react": "^16.4.0",
+    "react-datepicker": "^1.5.0",
     "react-dom": "^16.4.0",
+    "react-dropdown": "^1.5.0",
     "react-fontawesome": "^1.6.1",
+    "react-moment": "^0.7.6",
     "react-router-dom": "^4.2.2",
     "react-scripts": "1.1.4",
+    "react-validation": "^3.0.7",
     "reactstrap": "^6.0.1"
   },
   "scripts": {

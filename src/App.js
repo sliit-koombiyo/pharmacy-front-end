@@ -10,9 +10,9 @@ import {Col} from "reactstrap";
 import Home from "./components/Home/Home";
 import AssistantHome from './components/assistant/AssistantHome';
 import AddDrugs from './components/Drugs/AddDrugs';
-import DrugBatch  from './components/Drugs/AddDrugBatch';
 
 import './App.css';
+import AddDrugBatch from './components/Drugs/AddDrugBatch';
 
 class App extends Component {
 
@@ -58,7 +58,7 @@ class App extends Component {
         path: '/app/add_drugBatch',
         FA_name:"prescription-bottle-alt",
         title: 'Drug Batch',
-        component: () => <Col><AddDrugs/></Col>
+        component: () => <Col><AddDrugBatch/></Col>
       },
     ] 
     

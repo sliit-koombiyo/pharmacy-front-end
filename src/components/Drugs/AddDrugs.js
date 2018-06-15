@@ -1,15 +1,21 @@
 import React, { Component } from 'react';
 import * as axios from 'axios';
 import {
-    Button,
+    Button,Label,Input,
     Card, CardBody, CardSubtitle, CardText, CardTitle,
-    CardHeader, CardFooter, Table
+    CardHeader, CardFooter, Table,Form
 } from 'reactstrap';
 import DrugDetails from './DrugDetails';
 import UpdateDrugs from './UpdateDrugs';
+import Dropdown from 'react-dropdown';
+import 'react-dropdown/style.css';
+const DropDownFortypes =["pills","Table","Cream","Syrup"];
+const defaultOption = DropDownFortypes[0];
+
 
 class AddDrugs extends Component {
 
+  
     constructor() {
         super();
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -28,7 +34,9 @@ class AddDrugs extends Component {
         axios.get('http://localhost:5000/drugs').then((response) => {
             console.log(JSON.stringify("drug list" + JSON.stringify(response.data.data)));
             this.setState({ drugs: response.data.data})
-          })
+          });
+          
+         
     }
 
     handleSubmit(event) {
@@ -62,35 +70,38 @@ class AddDrugs extends Component {
        
       // }
 
+      
+
     render() {
         return (
           <div>
             <Card>
               <CardHeader style={{ backgroundColor: '#397ed0', color: 'white' }}>Add Drugs</CardHeader>
               <CardBody>
-              <form onSubmit={this.handleSubmit}>
-                <label htmlFor="drugID">DrugID</label>
-                 <input id="drugID" name="drugID" type="text" />
-
-                 <label htmlFor="name">DrugName</label>
-                 <input id="name" name="name" type="text" />
-
-                 <label htmlFor="stock">stock</label>
-                  <input id="stock" name="stock" type="text" />
-
-                  <label htmlFor="type">Type</label>
-                  <input id="type" name="type" type="text" />
-
-                  <label htmlFor="price">Price</label>
-                  <input id="price" name="price" type="text" />
-
-                   <label htmlFor="dangerlevel">Dangerlevel</label>
-                  <input id="dangerlevel" name="dangerlevel" type="text" />
-
-                  <label htmlFor="reorderLevel">ReorderLevel</label>
-                  <input id="reorderLevel" name="reorderLevel" type="text" />
-                <button>Add</button>
-      </form>
+              <Form onSubmit={this.handleSubmit}>
+               <b><Label htmlFor="drugID">DrugID</Label></b>
+                 <Input id="drugID" name="drugID" type="text" placeholder="Drug ID"/>
+                <br></br>
+                 <Label htmlFor="name" >DrugName</Label>
+                 <Input id="name" name="name" type="text"  placeholder="Drug name"/>
+                 <br></br>
+                 <Label htmlFor="stock">stock</Label>
+                  <Input id="stock" name="stock" type="text" placeholder="stock"/>
+                  <br></br>
+                  <Label htmlFor="type">Type</Label>
+                  <Dropdown options={DropDownFortypes} onChange={this._onSelect} value={defaultOption} placeholder="Select an option" />
+                  <br></br>
+                  <Label htmlFor="price">Price</Label>
+                  <Input id="price" name="price" type="text" placeholder="price" />
+                  <br></br>
+                   <Label htmlFor="dangerlevel">Dangerlevel</Label>
+                  <Input id="dangerlevel" name="dangerlevel" type="text" placeholder="Danger Level" />
+                  <br></br>
+                  <Label htmlFor="reorderLevel">ReorderLevel</Label>
+                  <Input id="reorderLevel" name="reorderLevel" type="text" placeholder="re Orderlevel" />
+                  <br></br> 
+                <Button>Add</Button>
+      </Form>
               </CardBody>
             </Card>
             <br />
