@@ -5,7 +5,7 @@ import {
     Card, CardBody, CardSubtitle, CardText, CardTitle,
     CardHeader, CardFooter, Table
 } from 'reactstrap';
-import DrugDetails from './DrugDetails';
+import DrugDetails from '../Drugs/DrugDetails';
 
 class ManageGRN extends Component {
 
