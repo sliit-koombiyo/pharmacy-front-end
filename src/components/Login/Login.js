@@ -261,7 +261,7 @@ class Login extends Component {
                 <Input onChange={this.handleInputChange} type="year" name="inputJoinedYear" id="inputJoinedYear"
                   placeholder="Year Joined" />
               </FormGroup>
-              <Button name="registerBtn" onClick={this.register}>Register</Button>
+              <Button onClick={this.register}>Register</Button>
             </Form>
             <hr />
             <Alert isOpen={this.state.registerAlertOpen} color="danger">
@@ -292,7 +292,7 @@ class Login extends Component {
                   placeholder="Password" />
               </FormGroup>
               
-              <Button name="recoveryBtn" onClick={this.recoverPassword}>Recover Password</Button>
+              <Button onClick={this.recoverPassword}>Recover Password</Button>
             </Form>
             <hr />
             <Alert isOpen={this.state.recoveryAlertOpen} color="danger">
