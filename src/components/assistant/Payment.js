@@ -7,9 +7,40 @@ import Bill from './Bill';
 class Payment extends Component {
   constructor(props) {
     super(props);
-
+    this.state = {
+      bill: {},
+      billTotal: 0
+    }
     this.toggle = this.toggle.bind(this);
     this.dispense = this.dispense.bind(this);
+  }
+
+  componentWillReceiveProps() {
+
+    let tempLineItem;
+    let tempBillItems = [];
+    if(this.props.prescription.prescriptionItems) {
+      this.props.prescription.prescriptionItems.map((item)=>{
+        tempLineItem = {
+          name: item.drug,
+          price: item.price,
+          quantity: item.quantity
+        }
+        tempBillItems.push(tempLineItem);
+      })
+  
+      const postData = {
+        patient: this.props.prescription.patientName,
+        items: tempBillItems
+      }
+  
+      Axios.post('http://localhost:8080/billing/get-total', postData).then((result)=>{
+        console.log("BILL result : " + JSON.stringify(result))
+        this.setState({bill: result.data, billTotal: result.data.total});
+      }).catch(err=>{
+        console.error(err)
+      })
+    }
   }
 
   printBill = () => {
@@ -24,11 +55,17 @@ class Payment extends Component {
   }
 
   dispense() {
-    Axios.post('https://koombiyo-pharmacy.herokuapp.com/prescriptions/dispense', this.props.prescription).then((result)=>{
+    Axios.post('http://localhost:8080/billing/', this.state.bill).then((result)=>{
+      console.log("BILL result : " + JSON.stringify(result));
+      Axios.post('https://koombiyo-pharmacy.herokuapp.com/prescriptions/dispense', this.props.prescription).then((result)=>{
       console.log(result);
+      this.props.refreshPrescriptions()
     }).catch((err)=>{
       console.error(err)
     });
+    }).catch(err=>{
+      console.error(err)
+    })
     this.props.toggle()
   }
   
@@ -49,7 +86,7 @@ class Payment extends Component {
             <Button color="danger" style={{marginRight: 10, minWidth: 100}} onClick={this.toggle}>Cancel</Button>
           </div>
           <hr/>
-            <Bill/>
+            <Bill prescription={this.props.prescription} billTotal={this.state.billTotal}/>
           </ModalBody>
           <ModalFooter>
             
