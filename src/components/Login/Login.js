@@ -273,7 +273,7 @@ class Login extends Component {
               </FormGroup>
               <FormGroup>
                 <Label for="inputPassword">Password</Label>
-                <Input onChange={this.updatePasswordValue} type="password" name="inputPassword" id="inputPassword"
+                <Input onChange={this.handleInputChange} type="password" name="inputPassword" id="inputPassword"
                   placeholder="Password" />
               </FormGroup>
               
