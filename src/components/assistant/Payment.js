@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter, Table } from 'reactstrap';
 import Axios from 'axios';
-
+import Bill from './Bill'; 
 class Payment extends Component {
   constructor(props) {
     super(props);
@@ -11,7 +11,7 @@ class Payment extends Component {
   }
 
   dispense() {
-    Axios.post('http://localhost:5000/prescriptions/dispense', this.props.prescription).then((result)=>{
+    Axios.post('https://koombiyo-pharmacy.herokuapp.com/prescriptions/dispense', this.props.prescription).then((result)=>{
       console.log(result);
     }).catch((err)=>{
       console.error(err)
@@ -23,15 +23,6 @@ class Payment extends Component {
     this.props.toggle()
   }
 
-  dispense() {
-    Axios.post('http://localhost:5000/prescriptions/dispense', this.props.prescription).then((result)=>{
-      console.log(result);
-    }).catch((err)=>{
-      console.error(err)
-    });
-    this.props.toggle()
-  }
-
   render() {
     return (
       <div>
@@ -39,6 +30,7 @@ class Payment extends Component {
           <ModalHeader toggle={this.toggle}>Prescription : {this.props.prescription._id}</ModalHeader>
           <ModalBody>
             Payments
+            <Bill/>
           </ModalBody>
           <ModalFooter>
             <Button color="primary" onClick={this.dispense}>Dispense</Button>{' '}

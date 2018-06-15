@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import * as axios from 'axios';
 import PrescriptionDetails from './PrescriptionDetails';
 import Payment from './Payment';
-import Bill from './Bill';
 import {
   Button,
   Card, CardBody, CardSubtitle, CardText, CardTitle,
@@ -24,10 +23,10 @@ class AssistantHome extends Component {
   }
 
   componentDidMount() {
-    axios.get('http://localhost:5000/prescriptions').then((response) => {
+    axios.get('https://koombiyo-pharmacy.herokuapp.com/prescriptions').then((response) => {
       this.setState({ prescriptions: response.data, results: response.data })
     })
-    axios.get('http://localhost:5000/drugs').then((response) => {
+    axios.get('https://koombiyo-pharmacy.herokuapp.com/drugs').then((response) => {
       console.log(JSON.stringify("drug list" + JSON.stringify(response.data.data)));
       this.setState({ stocks: response.data.data })
     })
@@ -148,7 +147,6 @@ class AssistantHome extends Component {
             <Button>Button</Button>
           </CardBody>
         </Card>
-        <Bill/>
       </div>
     );
   };
