@@ -32,12 +32,12 @@ class AddDrugBatch extends Component {
     }
 
     componentDidMount(){
-        axios.get('http://localhost:5000/DrugBatch').then((response) => {
+        axios.get('https://koombiyo-pharmacy.herokuapp.com//DrugBatch').then((response) => {
             console.log(JSON.stringify("drug list" + JSON.stringify(response.data.data)));
             this.setState({ drugsbatch: response.data.data})
           });
 
-          axios.get('http://localhost:5000/Drug').then((response) => {
+          axios.get('https://koombiyo-pharmacy.herokuapp.com//Drug').then((response) => {
             console.log(JSON.stringify("drug list" + JSON.stringify(response.data.data)));
             this.setState({ drugs: response.data.data})
           });
@@ -54,7 +54,7 @@ class AddDrugBatch extends Component {
     handleSubmit(event) {
         event.preventDefault();
         const data = new FormData(event.target);
-        axios.post("http://localhost:5000/drugBatch",{body:data});
+        axios.post("https://koombiyo-pharmacy.herokuapp.com//drugBatch",{body:data});
     }
 
     showDetails = (evt) => {

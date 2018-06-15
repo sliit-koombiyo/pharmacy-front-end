@@ -47,7 +47,7 @@ class AddDrugs extends Component {
     }
 
     refreshDrugs = () => {
-      axios.get('http://localhost:5000/drugs').then((response) => {
+      axios.get('https://koombiyo-pharmacy.herokuapp.com//drugs').then((response) => {
         console.log(JSON.stringify("drug list" + JSON.stringify(response.data.data)));
         this.setState({ drugs: response.data.data}, () => {
           console.log("Drug Page refreshed" + this.state.drugs);
@@ -57,7 +57,7 @@ class AddDrugs extends Component {
 
     componentDidMount(){
       this.refreshDrugs();
-        // axios.get('http://localhost:5000/drugs').then((response) => {
+        // axios.get('https://koombiyo-pharmacy.herokuapp.com//drugs').then((response) => {
         //     console.log(JSON.stringify("drug list" + JSON.stringify(response.data.data)));
         //     this.setState({ drugs: response.data.data})
         //     console.log(this.state.drugs);
@@ -92,7 +92,7 @@ class AddDrugs extends Component {
           reorderLevel: event.target.reorderLevel.value
         }
         console.log("New Drug to add"+JSON.stringify(postBody));
-        axios.post("http://localhost:5000/drugs",{data:postBody}).then((res)=>{
+        axios.post("https://koombiyo-pharmacy.herokuapp.com//drugs",{data:postBody}).then((res)=>{
           console.log(res)
         }).catch((err)=>{
           console.log(err);
@@ -100,26 +100,11 @@ class AddDrugs extends Component {
         this.refreshDrugs();
       }
 
-<<<<<<< HEAD
-    //   AddNewDrug=(evt)=>{
-=======
     AddNewDrug=(evt)=>{
->>>>>>> 65ee8d2b9631c162a802bd218dfc0075e9b323f7
     
     //   console.log(this.state.newDrug);
   
-<<<<<<< HEAD
-    //   axios.post('http://localhost:5000/drugs/',{body:{data:this.newDrug}}).then((res)=>{
-    //     console.log(res)
-    //   }).catch((err)=>{
-    //     console.log(err);
-    //   });
-    //  // this.toggle();
-    //  this.refreshDrugs();
-    // }
-    
-=======
-      axios.post('http://localhost:5000/drugs/',{body:{data:this.newDrug}}).then((res)=>{
+      axios.post('https://koombiyo-pharmacy.herokuapp.com//drugs/',{body:{data:this.newDrug}}).then((res)=>{
         console.log(res)
       }).catch((err)=>{
         console.log(err);
@@ -145,14 +130,13 @@ class AddDrugs extends Component {
     //     //and pass that object to the axiosnpm stapost method
     //     console.log("New Drug"+this.state.newDrug);
         
-    //     axios.post('http://localhost:5000/Drugs', {data:this.newDrug}).then((result)=>{
+    //     axios.post('https://koombiyo-pharmacy.herokuapp.com//Drugs', {data:this.newDrug}).then((result)=>{
     //       console.log(result);
     //     }).catch((err)=>{
     //       console.error(err)
     //     });
    // }
 
->>>>>>> 65ee8d2b9631c162a802bd218dfc0075e9b323f7
     showDetails = (evt) => {
         console.log(evt.target.getAttribute('tempdata'));
         
@@ -174,7 +158,7 @@ class AddDrugs extends Component {
        let selected = this.state.drugs.find((drug)=>{
         return drug.drugID == evt.target.getAttribute('tempdata');
       });
-        axios.delete("http://localhost:5000/drugs/"+selected._id).then((res)=>{
+        axios.delete("https://koombiyo-pharmacy.herokuapp.com//drugs/"+selected._id).then((res)=>{
           console.log(res)
         }).catch((err)=>{
           console.log(err);

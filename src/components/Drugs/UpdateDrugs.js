@@ -52,7 +52,7 @@ class UpdateDrug extends Component {
     const toUpdate = event.target.getAttribute('tempdata'); 
     console.log("ID to update : " + JSON.stringify(toUpdate));
     console.log("form data : " + JSON.stringify(postBody ));
-    Axios.post('http://localhost:5000/drugs/'+toUpdate,{postBody}).then((res)=>{
+    Axios.post('https://koombiyo-pharmacy.herokuapp.com//drugs/'+toUpdate,{postBody}).then((res)=>{
           console.log(res)
         }).catch((err)=>{
           console.log(err);
@@ -66,7 +66,7 @@ class UpdateDrug extends Component {
   //   console.log(this.state.updatedDrug);
   //   console.log("ID to update" +toUpdate);
 
-  //   Axios.post('http://localhost:5000/drugs/'+toUpdate,{params:{id:this.state.toUpdate},body:{data:this.updatedDrug}}).then((res)=>{
+  //   Axios.post('https://koombiyo-pharmacy.herokuapp.com//drugs/'+toUpdate,{params:{id:this.state.toUpdate},body:{data:this.updatedDrug}}).then((res)=>{
   //     console.log(res)
   //   }).catch((err)=>{
   //     console.log(err);
