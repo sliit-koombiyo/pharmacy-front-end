@@ -43,11 +43,18 @@ class ManageGRN extends Component {
     handleSubmit(event) {
         event.preventDefault();
         const data = new FormData(event.target); // @reeshma This does not work 
-        console.log("form data : " + JSON.stringify(event.target.noteID.value)) 
+        console.log("form data : " + JSON.stringify(event.target.noteID.value))
+        const postBody = {
+          noteID: event.target.noteID.value,
+          supplier: event.target.supplier.value,
+          orderQuantity: event.target.orderQuantity.value,
+          deliveredQuantity: event.target.deliveredQuantity.value,
+          amount: event.target.amount.value
+        } 
         // try creating an object using the above -> event.target.drugID.value
         //and pass that object to the axios post method
         
-        // axios.post("https://koombiyo-pharmacy.herokuapp.com//drugs",{data});
+        axios.post("https:/koombiyo-pharmacy.herokuapp.com/grn",data);
     }
 
     showDetails = (evt) => {
@@ -95,8 +102,8 @@ class ManageGRN extends Component {
                   <Label htmlFor="amount">Amount</Label>
                   <Input id="amount" name="amount" type="text" placeholder="Enter Amount here" />
                   <br></br>
-                  
-                <Button>Add</Button>
+                  <input type="submit" value="Add"/>
+
       </Form>
               </CardBody>
             </Card>
