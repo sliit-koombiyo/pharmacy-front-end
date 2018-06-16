@@ -60,7 +60,7 @@ class ManageGRN extends Component {
             this.setState({ grns: response.data.data})
           });
         }).catch(err=>{
-          console.log(err);
+          console.log(err.message);
         });
     }
 
