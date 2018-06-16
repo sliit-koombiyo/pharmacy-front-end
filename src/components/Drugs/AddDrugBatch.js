@@ -128,7 +128,7 @@ class AddDrugBatch extends Component {
                   <b><Label htmlFor="batchQuntit   y">Batch Quantity</Label></b>
                   <Input id="batchQuntity" name="batchQuntity" type="text" />
                     <br></br>
-                <Button>Add</Button>
+                <Button color="primary">Add</Button>
       </Form>
               </CardBody>
             </Card>

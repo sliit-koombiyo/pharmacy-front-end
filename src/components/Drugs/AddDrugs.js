@@ -77,7 +77,7 @@ class AddDrugs extends Component {
           reorderLevel: event.target.reorderLevel.value
         }
         console.log("New Drug to add"+JSON.stringify(data));
-        axios.post("http://localhost:5000/drugs/",{data}).then((res)=>{
+        axios.post("http://localhost:5000/drugs/",data).then((res)=>{
           console.log(res)
         }).catch((err)=>{
           console.log(err);
@@ -177,7 +177,7 @@ class AddDrugs extends Component {
             <Card id="divToPrint">
             <CardHeader style={{ backgroundColor: '#397ed0', color: 'white' }}>Drugs</CardHeader>
               <CardBody>
-                <CardTitle>Card</CardTitle>
+                <CardTitle>Drugs</CardTitle>
                 <Table striped responsive bordered size="sm">
                   <thead>
                     <tr>
@@ -210,7 +210,7 @@ class AddDrugs extends Component {
             <UpdateDrugs drug ={this.state.selectedDrug} open = {this.state.updateModelOpen} toggle={this.toggleUpdateModel}  refreshDrugs={this.refreshDrugs}/>
             <div className="Button">
             <br></br>
-            <Button onClick={this.printBill}>Generate Report</Button>
+            <Button onClick={this.generateReport}>Generate Report</Button>
           </div>
           </div>
         );
