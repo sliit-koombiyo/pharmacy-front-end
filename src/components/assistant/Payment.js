@@ -25,8 +25,10 @@ class Payment extends Component {
 
     let tempLineItem;
     let tempBillItems = [];
+    let tempbillTotal = 0;
     if(this.props.prescription.prescriptionItems) {
       this.props.prescription.prescriptionItems.map((item)=>{
+        tempbillTotal += (item.price * item.quantity);
         tempLineItem = {
           name: item.drug,
           price: item.price,
@@ -39,6 +41,9 @@ class Payment extends Component {
         patient: this.props.prescription.patientName,
         items: tempBillItems
       }
+
+      // added this because the heroku service which runs billing takes a while to start from sleep.. Damsith IT16037434 
+      this.setState({billTotal: tempbillTotal});
   
       Axios.post('https://koombiyo-billing-management.herokuapp.com/billing/get-total', postData).then((result)=>{
         console.log("BILL result : " + JSON.stringify(result))
