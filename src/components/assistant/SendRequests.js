@@ -24,46 +24,28 @@ class SendRequests extends Component {
         }
     }
 
-    toggleModal = () => {
-      this.setState({modalOpen: !this.state.modalOpen});
-    }
-
+    
     componentDidMount(){
         axios.get('http://localhost:5000/requests').then((response) => {
             console.log(JSON.stringify("request list" + JSON.stringify(response.data.data)));
             this.setState({ requests: response.data.data})
-          });
-          
+          });          
          
     }
 
     handleSubmit(event) {
         event.preventDefault();
-        const data = new FormData(event.target); // @reeshma This does not work 
+        const data = new FormData(event.target); 
         console.log("form data : " + JSON.stringify(event.target.requestID.value)) 
-        // try creating an object using the above -> event.target.drugID.value
-        //and pass that object to the axios post method
         
-        // axios.post("http://localhost:5000/drugs",{data});
-    }
-
-    showDetails = (evt) => {
-        // console.log(evt.target.getAttribute('tempdata'));
-        let selected = this.state.requests.find((request)=>{
-          return request._id === evt.target.getAttribute('tempdata');
-        })
-        this.setState({selectedRequest: selected}, ()=>{
-          this.toggleModal()
-       });
-       
-      }
+    }   
           
 
     render() {
         return (
           <div>
             <Card>
-              <CardHeader style={{ backgroundColor: '#397ed0', color: 'white' }}>SendRequests</CardHeader>
+              <CardHeader style={{ backgroundColor: '#397ed0', color: 'white' }}>Send Requests</CardHeader>
               <CardBody>
               <Form onSubmit={this.handleSubmit}>
                <b><Label htmlFor="requestID">Request ID</Label></b>
@@ -83,7 +65,7 @@ class SendRequests extends Component {
                   <br></br>
                   
                 <Button>Send Request</Button>
-      </Form>
+                </Form>
               </CardBody>
             
            </Card>
@@ -94,3 +76,6 @@ class SendRequests extends Component {
     }
 
 export default SendRequests; 
+
+
+  
