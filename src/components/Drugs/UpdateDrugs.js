@@ -24,23 +24,6 @@ class UpdateDrug extends Component {
   componentDidMount(){
     this.refreshDrugs();
   }
-
-  // handleChange =(event)=> {
-  //   this.state.toUpdate = event.target.getAttribute('tempdata');
-  //   this.setState({[event.target.name]:event.target.value} )
-  //   console.log(this.state.name);
-
-  //   this.setState({updatedDrug:{
-  //      name:this.state.name,
-  //      stock:this.state.stock,
-  //      type:this.state.type,
-  //      price:this.state.price,
-  //      dangerlevel:this.state.dangerlevel,
-  //      reorderLevel:this.state.reorderLevel
-       
-  //   }
-  //   });
-  // }
   handleSubmit=(event)=>{
        
         event.preventDefault();
@@ -56,35 +39,16 @@ class UpdateDrug extends Component {
     const toUpdate = event.target.getAttribute('tempdata'); 
     console.log("ID to update : " + JSON.stringify(event.target.drugID.value));
     console.log("form data : " + JSON.stringify(postBody ));
-    Axios.post('http://localhost:5000/drugs/'+event.target.drugID.value,{postBody}).then((res)=>{
+    Axios.post('http://localhost:5000/drugs/'+event.target.drugID.value,postBody).then((res)=>{
           console.log(res)
         }).catch((err)=>{
           console.log(err);
         });
-        console.log("delete id"+ this.props.drug._id);
-      Axios.delete('http://localhost:5000/drugs/'+this.props.drug._id).then((res)=>{
-        console.log(res)
-      }).catch((err)=>{
-        console.log(err);
-      }) ;
         this.toggle();
         this.refreshDrugs();
         this.componentDidMount();
-  }
+  } 
   
-  // UpdateDrug=(evt)=>{
-  //   const toUpdate = evt.target.getAttribute('tempdata');
-  //   console.log(this.state.updatedDrug);
-  //   console.log("ID to update" +toUpdate);
-
-  //   Axios.post('http://localhost:5000/drugs/'+toUpdate,{params:{id:this.state.toUpdate},body:{data:this.updatedDrug}}).then((res)=>{
-  //     console.log(res)
-  //   }).catch((err)=>{
-  //     console.log(err);
-  //   });
-  //   this.toggle();
-  // }
-
   render() {
     return (
       <div>
