@@ -27,13 +27,16 @@ class ViewRequests extends Component {
     toggleModal = () => {
       this.setState({modalOpen: !this.state.modalOpen});
     }
+    refreshDrugs = () => {
+      axios.get('https://koombiyo-pharmacy.herokuapp.com/requests').then((response) => {
+        console.log(JSON.stringify("requestlist" + JSON.stringify(response.data.data)));
+        this.setState({ requests: response.data.data})
+      });
+      
+  }
 
     componentDidMount(){
-        axios.get('https://koombiyo-pharmacy.herokuapp.com/requests').then((response) => {
-            console.log(JSON.stringify("requestlist" + JSON.stringify(response.data.data)));
-            this.setState({ requests: response.data.data})
-          });
-          
+       this.refreshDrugs();
          
     }
 

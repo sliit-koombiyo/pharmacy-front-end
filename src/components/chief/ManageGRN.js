@@ -70,6 +70,8 @@ class ManageGRN extends Component {
         }).catch(err=>{
           console.log(err.message);
         });
+        this.refreshDrugs();
+        this.componentDidMount();
     }
 
     showDetails = (evt) => {
