@@ -59,6 +59,8 @@ class ManageGRN extends Component {
             console.log(JSON.stringify("grn list" + JSON.stringify(response.data.data)));
             this.setState({ grns: response.data.data})
           });
+        }).catch(err=>{
+          console.log(err);
         });
     }
 
