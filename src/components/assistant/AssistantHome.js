@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import * as axios from 'axios';
 import PrescriptionDetails from './PrescriptionDetails';
 import Payment from './Payment';
+import {ToastContainer, ToastStore} from 'react-toasts';
 import {
   Button,
   Card, CardBody, CardSubtitle, CardText, CardTitle,
@@ -24,6 +25,7 @@ class AssistantHome extends Component {
     axios.get('https://koombiyo-pharmacy.herokuapp.com/prescriptions').then((response) => {
       this.setState({ allPrescriptions: response.data, results: response.data }, () => {
         console.log("prescriptions refreshed" + this.state.results);
+        ToastStore.success('results refreshed !');
       })
     })
   }
@@ -33,6 +35,10 @@ class AssistantHome extends Component {
       console.log(JSON.stringify("drug list" + JSON.stringify(response.data.data)));
       this.setState({ stocks: response.data.data })
     })
+  }
+
+  toast = (message) => {
+    ToastStore.success(message);
   }
 
   toggleModal = () => {
@@ -117,6 +123,7 @@ class AssistantHome extends Component {
               open={this.state.paymentOpen}
               toggle={this.togglePaymentModal}
               refreshPrescriptions={this.refreshPrescriptions}
+              toast={this.toast}
             />
           </CardBody>
         </Card>
@@ -160,6 +167,7 @@ class AssistantHome extends Component {
             
           </CardBody>
         </Card>
+        <ToastContainer store={ToastStore}/>
       </div>
     );
   };

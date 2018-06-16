@@ -3,6 +3,8 @@ import {
   Input, Button, Label, Card, Alert,
   Modal, ModalHeader, ModalBody, Form, FormGroup
 } from 'reactstrap';
+import {ToastContainer, ToastStore} from 'react-toasts';
+import { decode } from "jsonwebtoken";
 import { Redirect } from "react-router-dom";
 import axios from 'axios';
 
@@ -65,7 +67,20 @@ class Login extends Component {
 
   login = () => {
     console.log('login called');
-    this.props.toggleLogin();
+    axios.post('https://koombio-auth.herokuapp.com/auth', {username: this.state.username, password: this.state.password}).then((result)=>{
+      if(result.data.success) {
+        console.log(result.data);
+        localStorage.setItem("x-pharmacy-token", result.data.token);
+        const decodedToken = decode(result.data.token);
+        console.log(decodedToken.data.role);
+        this.props.mainLogin(decodedToken.data.role === "chief pharmacist");
+      } else {
+        ToastStore.warning("invalid credentials");
+      }
+    }).catch((err)=>{
+      console.log("error in api call " + err)
+    })
+    // this.props.mainLogin();
     this.setState({ redirectToReferrer: true });
   };
 
@@ -74,15 +89,15 @@ class Login extends Component {
 
     if (this.state.inputEmpID && this.state.inputUsername && this.state.inputPassword && this.state.inputRole && this.state.inputJoinedYear) {
        const newUser = {
-         EmpID: this.state.inputEmpID,
-         username: this.state.inputUsername,
+        empID: this.state.inputEmpID,
+        userName: this.state.inputUsername,
          password: this.state.inputPassword,
          role: this.state.inputRole,
-         joinedYear: this.state.inputJoinedYear
+        //  joinedYear: this.state.inputJoinedYear  
        }
 
-      console.log('all fields OK');
-       axios.post("http://localhost:8083/user/register", newUser).then((response) => {
+      console.log('all fields OK : ' + JSON.stringify(newUser));
+       axios.post('https://koombio-auth.herokuapp.com/user/register', newUser).then((response) => {
          if (response.data.success) {
            console.log('response from order API ' + JSON.stringify(response.data));
            this.setState({
@@ -130,7 +145,7 @@ class Login extends Component {
       }
 
       console.log('all fields OK');
-      axios.put("http://localhost:8083/user/:userName", newPassword).then((response) => {
+      axios.put('https://koombio-auth.herokuapp.com/user/:userName', newPassword).then((response) => {
          if (response.data.success) {
            console.log('response from order API ' + JSON.stringify(response.data));
            this.setState({
@@ -201,7 +216,7 @@ class Login extends Component {
               onChange={this.updatePasswordValue}
             />
             <br />
-            <Button onClick={this.login}>Log in</Button>
+            <Button color="primary" onClick={this.login} >Log in</Button>
             <br />
             <div>
               Don't have an account? - <a style={{ color: "#0069d9" }} onClick={this.toggleModal}>Register here</a>
@@ -246,7 +261,7 @@ class Login extends Component {
                 <Input onChange={this.handleInputChange} type="year" name="inputJoinedYear" id="inputJoinedYear"
                   placeholder="Year Joined" />
               </FormGroup>
-              <Button name="registerBtn" onClick={this.register}>Register</Button>
+              <Button color="primary" onClick={this.register} >Register</Button>
             </Form>
             <hr />
             <Alert isOpen={this.state.registerAlertOpen} color="danger">
@@ -277,7 +292,7 @@ class Login extends Component {
                   placeholder="Password" />
               </FormGroup>
               
-              <Button name="recoveryBtn" onClick={this.recoverPassword}>Recover Password</Button>
+              <Button bsStyle="primary" onClick={this.recoverPassword} >Recover Password</Button>
             </Form>
             <hr />
             <Alert isOpen={this.state.recoveryAlertOpen} color="danger">
@@ -285,6 +300,7 @@ class Login extends Component {
             </Alert>
           </ModalBody>
         </Modal>
+        <ToastContainer store={ToastStore}/>
       </div>
     );
   }

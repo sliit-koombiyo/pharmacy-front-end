@@ -3,20 +3,23 @@ import {NavLink} from 'react-router-dom';
 import './SideNav.css';
 import {Nav, NavItem, Button} from "reactstrap";
 import FA from "react-fontawesome";
+import axios from 'axios';
 
 class SideNav extends Component {
 
   // TODO: remove this method
-  changeChiefMode = () => {
-    console.log('changeChiefMode');
-    this.props.toggleChiefMode()
-  }
-  // TODO: remove this method
   logout = () => {
-    console.log('logging out');
-    this.props.toggleLogin();
+    console.log('deactivated');
+    this.props.mainLogout();
   }
 
+  deactivate = () => {
+    axios.delete("https://koombio-auth.herokuapp.com/user/:userName").then((res)=>{
+          console.log(res)
+        }).catch((err)=>{
+          console.log(err);
+        })
+  }
 
   render() {
 
@@ -38,10 +41,11 @@ class SideNav extends Component {
 
           }
         </Nav>
-        {/*TODO: remove this button*/}
-        <Button onClick={this.changeChiefMode}>changeMode</Button>
         <div className="sidebarFiller"></div>
-        <Button onClick={this.logout}>Logout</Button>
+        <Button color="primary" onClick={this.deactivate}>Deactivate</Button>
+        <br/> 
+        <br />
+        <Button color="primary" onClick={this.logout}>Logout</Button>
       </div>
     );
 

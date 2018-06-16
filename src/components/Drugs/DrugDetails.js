@@ -20,7 +20,7 @@ class DrugDetails extends Component {
   DeleteDrug=(evt)=>{
     // console.log(evt.target.getAttribute('tempdata'));
     // const todelete = evt.target.getAttribute('tempdata');
-    Axios.delete("http://localhost:5000/drugs/"+this.props.drug._id).then((res)=>{
+    Axios.delete("https://koombiyo-pharmacy.herokuapp.com//drugs/"+this.props.drug._id).then((res)=>{
       console.log(res)
     }).catch((err)=>{
       console.log(err);

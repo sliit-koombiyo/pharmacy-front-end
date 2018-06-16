@@ -6,6 +6,7 @@
     "axios": "^0.18.0",
     "bootstrap": "^4.1.1",
     "html2canvas": "^1.0.0-alpha.12",
+    "jsonwebtoken": "^8.3.0",
     "jspdf": "^1.4.1",
     "moment": "^2.22.2",
     "react": "^16.4.0",
@@ -17,6 +18,7 @@
     "react-pdf": "^3.0.5",
     "react-router-dom": "^4.2.2",
     "react-scripts": "^1.1.4",
+    "react-toasts": "^2.0.6",
     "react-validation": "^3.0.7",
     "reactstrap": "^6.0.1"
   },

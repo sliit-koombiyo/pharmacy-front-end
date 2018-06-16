@@ -53,7 +53,7 @@ class SendRequests extends Component {
     // try creating an object using the above -> event.target.drugID.value
     //and pass that object to the axios post method
 
-    // axios.post("http://localhost:5000/drugs",{data});
+    axios.post("https:/koombiyo-pharmacy.herokuapp.com/requests",postBody);
   }
 
   showDetails = (evt) => {

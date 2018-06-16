@@ -34,7 +34,7 @@ class Payment extends Component {
         items: tempBillItems
       }
   
-      Axios.post('http://localhost:8080/billing/get-total', postData).then((result)=>{
+      Axios.post('https://koombiyo-billing-management.herokuapp.com/billing/get-total', postData).then((result)=>{
         console.log("BILL result : " + JSON.stringify(result))
         this.setState({bill: result.data, billTotal: result.data.total});
       }).catch(err=>{
@@ -55,10 +55,11 @@ class Payment extends Component {
   }
 
   dispense() {
-    Axios.post('http://localhost:8080/billing/', this.state.bill).then((result)=>{
+    Axios.post('https://koombiyo-billing-management.herokuapp.com/billing/', this.state.bill).then((result)=>{
       console.log("BILL result : " + JSON.stringify(result));
       Axios.post('https://koombiyo-pharmacy.herokuapp.com/prescriptions/dispense', this.props.prescription).then((result)=>{
       console.log(result);
+      this.props.toast("Bill payment registered")
       this.props.refreshPrescriptions()
     }).catch((err)=>{
       console.error(err)
