@@ -57,18 +57,7 @@ class SendRequests extends Component {
        });
        
       }
-      // goToUpdate= (evt) => {
-      //   // console.log(evt.target.getAttribute('tempdata'));
-      //   let selected = this.state.drugs.find((drug)=>{
-      //     return drug._id === evt.target.getAttribute('tempdata');
-      //   })
-      //   this.setState({selectedDrug: selected}, ()=>{
-      //     this.toggleModal()
-      //  });
-       
-      // }
-
-      
+          
 
     render() {
         return (
