@@ -40,6 +40,10 @@ class AddDrugBatch extends Component {
     }
 
     componentDidMount(){
+      // set the access token for every request
+    axios.defaults.headers.common = {
+      "x-pharmacy-accesstoken":  localStorage.xPharmacyToken
+    };
        this.refreshDrugsBatch();
       
     }
@@ -54,7 +58,7 @@ class AddDrugBatch extends Component {
       console.log("batch ID"+event.target.batchID.value);
       console.log("Drug ID"+event.target.drugID.value);
      // console.log("New Drug to add"+JSON.stringify(data));
-      axios.post("http://localhost:5000/drugsBatch",data).then((res)=>{
+      axios.post("https://koombiyo-pharmacy.herokuapp.com/drugsBatch",data).then((res)=>{
         console.log(res)
       }).catch((err)=>{
         console.log(err);

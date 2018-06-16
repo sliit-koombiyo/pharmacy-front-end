@@ -36,6 +36,10 @@ class ViewRequests extends Component {
   }
 
     componentDidMount(){
+      // set the access token for every request
+    axios.defaults.headers.common = {
+      "x-pharmacy-accesstoken":  localStorage.xPharmacyToken
+    };
        this.refreshDrugs();
          
     }

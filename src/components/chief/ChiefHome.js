@@ -27,6 +27,11 @@ class ChiefHome extends Component {
 
     
     componentDidMount(){
+
+      // set the access token for every request
+    axios.defaults.headers.common = {
+      "x-pharmacy-accesstoken":  localStorage.xPharmacyToken
+    };
         axios.get('https://koombiyo-pharmacy.herokuapp.com/drugs').then((response) => {
             console.log(JSON.stringify("drug list" + JSON.stringify(response.data.data)));
             this.setState({ drugs: response.data.data})

@@ -31,6 +31,14 @@ class Login extends Component {
     };
   }
 
+  componentDidMount() {
+    if (navigator.cookieEnabled) {
+      console.log("Cookies enabled");
+    } else {
+      ToastStore.error("WARNING! Cookies must be enabled!");
+    }
+  }
+
   updateUsernameValue = (evt) => {
     this.setState({
       username: evt.target.value
@@ -70,7 +78,7 @@ class Login extends Component {
     axios.post('https://koombio-auth.herokuapp.com/auth', {username: this.state.username, password: this.state.password}).then((result)=>{
       if(result.data.success) {
         console.log(result.data);
-        localStorage.setItem("x-pharmacy-token", result.data.token);
+        localStorage.setItem("xPharmacyToken", result.data.token);
         const decodedToken = decode(result.data.token);
         console.log(decodedToken.data.role);
         this.props.mainLogin(decodedToken.data.role === "chief pharmacist");

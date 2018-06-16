@@ -9,6 +9,13 @@ class DrugBatchDetails extends Component {
     this.toggle = this.toggle.bind(this);
   }
 
+  componentDidMount() {
+    // set the access token for every request
+    Axios.defaults.headers.common = {
+      "x-pharmacy-accesstoken":  localStorage.xPharmacyToken
+    };
+  }
+
   refreshDrugsBatch(){
     this.props.refreshDrugsBatch()
   }  
@@ -20,7 +27,7 @@ class DrugBatchDetails extends Component {
   DeleteDrugBatch=(evt)=>{
     // console.log(evt.target.getAttribute('tempdata'));
     // const todelete = evt.target.getAttribute('tempdata');
-    Axios.delete("http://localhost:5000/drugBatch/"+this.props.drugBatch._id).then((res)=>{
+    Axios.delete("https://koombiyo-pharmacy.herokuapp.com/drugBatch/"+this.props.drugBatch._id).then((res)=>{
       console.log(res)
     }).catch((err)=>{
       console.log(err);

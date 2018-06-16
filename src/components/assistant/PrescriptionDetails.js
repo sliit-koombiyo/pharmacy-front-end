@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter, Table } from 'reactstrap';
-import Axios from 'axios';
 
 class PrescriptionDetails extends Component {
   constructor() {

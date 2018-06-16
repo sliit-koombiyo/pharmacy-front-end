@@ -15,6 +15,12 @@ class Payment extends Component {
     this.dispense = this.dispense.bind(this);
   }
 
+  componentDidMount() {
+    Axios.defaults.headers.common = {
+      "x-pharmacy-accesstoken":  localStorage.xPharmacyToken
+    };
+  }
+
   componentWillReceiveProps() {
 
     let tempLineItem;

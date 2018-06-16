@@ -48,6 +48,10 @@ class AddDrugs extends Component {
       })
     }
     componentDidMount(){
+      // set the access token for every request
+    axios.defaults.headers.common = {
+      "x-pharmacy-accesstoken":  localStorage.xPharmacyToken
+    };
       this.refreshDrugs();
     }
 
@@ -77,7 +81,7 @@ class AddDrugs extends Component {
           reorderLevel: event.target.reorderLevel.value
         }
         console.log("New Drug to add"+JSON.stringify(data));
-        axios.post("http://localhost:5000/drugs/",data).then((res)=>{
+        axios.post("https://koombiyo-pharmacy.herokuapp.com/drugs/",data).then((res)=>{
           console.log(res)
         }).catch((err)=>{
           console.log(err);
@@ -107,7 +111,7 @@ class AddDrugs extends Component {
         return drug._id == evt.target.getAttribute('tempdata');
       });
       console.log(selected._id);
-        axios.delete("http://localhost:5000/drugs/"+selected._id).then((res)=>{
+        axios.delete("https://koombiyo-pharmacy.herokuapp.com/drugs/"+selected._id).then((res)=>{
           console.log(res)
         }).catch((err)=>{
           console.log(err);

@@ -27,9 +27,18 @@ class AssistantHome extends Component {
         console.log("prescriptions refreshed" + this.state.results);
         ToastStore.success('results refreshed !');
       })
-    })
+    }).catch((err=>{
+      console.log(JSON.stringify(err))
+      ToastStore.warning("cannot get prescriptions " + err.response.data.message);
+    }))
   }
   componentDidMount() {
+
+    // set the access token for every request
+    axios.defaults.headers.common = {
+      "x-pharmacy-accesstoken":  localStorage.xPharmacyToken
+    };
+
     this.refreshPrescriptions();
     axios.get('https://koombiyo-pharmacy.herokuapp.com/drugs').then((response) => {
       console.log(JSON.stringify("drug list" + JSON.stringify(response.data.data)));

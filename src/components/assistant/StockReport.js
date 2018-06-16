@@ -23,6 +23,11 @@ class StockReport extends Component {
   }
   }
   componentDidMount() {
+    // set the access token for every request
+    axios.defaults.headers.common = {
+      "x-pharmacy-accesstoken":  localStorage.xPharmacyToken
+    };
+
     axios.get('https://koombiyo-pharmacy.herokuapp.com/prescriptions').then((response) => {
       this.setState({ prescriptions: response.data, results: response.data })
     })

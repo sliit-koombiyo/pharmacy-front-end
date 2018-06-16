@@ -29,6 +29,11 @@ class SendRequests extends Component {
   }
 
   componentDidMount() {
+    // set the access token for every request
+    axios.defaults.headers.common = {
+      "x-pharmacy-accesstoken":  localStorage.xPharmacyToken
+    };
+    
     axios.get('https://koombiyo-pharmacy.herokuapp.com/requests').then((response) => {
       console.log(JSON.stringify("request list" + JSON.stringify(response.data.data)));
       this.setState({ requests: response.data.data })

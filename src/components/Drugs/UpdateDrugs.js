@@ -22,6 +22,10 @@ class UpdateDrug extends Component {
   }
 
   componentDidMount(){
+    // set the access token for every request
+    Axios.defaults.headers.common = {
+      "x-pharmacy-accesstoken":  localStorage.xPharmacyToken
+    };
     this.refreshDrugs();
   }
   handleSubmit=(event)=>{
@@ -39,7 +43,7 @@ class UpdateDrug extends Component {
     const toUpdate = event.target.getAttribute('tempdata'); 
     console.log("ID to update : " + JSON.stringify(event.target.drugID.value));
     console.log("form data : " + JSON.stringify(postBody ));
-    Axios.post('http://localhost:5000/drugs/'+event.target.drugID.value,postBody).then((res)=>{
+    Axios.post('https://koombiyo-pharmacy.herokuapp.com/drugs/'+event.target.drugID.value,postBody).then((res)=>{
           console.log(res)
         }).catch((err)=>{
           console.log(err);

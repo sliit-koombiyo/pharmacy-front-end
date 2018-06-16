@@ -9,6 +9,13 @@ class DrugDetails extends Component {
     this.toggle = this.toggle.bind(this);
   }
 
+  componentDidMount() {
+    // set the access token for every request
+    Axios.defaults.headers.common = {
+      "x-pharmacy-accesstoken":  localStorage.xPharmacyToken
+    };
+  }
+
   refreshDrugs(){
     this.props.refreshDrugs()
   }  

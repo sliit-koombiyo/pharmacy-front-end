@@ -12,10 +12,18 @@ class GRNDetails extends Component {
   toggle() {
     this.props.toggle()
   }
+
+  componentDidMount() {
+    // set the access token for every request
+    Axios.defaults.headers.common = {
+      "x-pharmacy-accesstoken":  localStorage.xPharmacyToken
+    };
+  }
+
   DeleteGRN=(evt)=>{
     console.log(evt.target.getAttribute('tempdata'));
     const todelete = evt.target.getAttribute('tempdata');
-    Axios.delete("http://localhost/grn"+todelete).then((res)=>{
+    Axios.delete("https://koombiyo-pharmacy.herokuapp.com/grn"+todelete).then((res)=>{
       console.log(res)
     }).catch((err)=>{
       console.log(err);
