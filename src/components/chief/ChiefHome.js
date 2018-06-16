@@ -27,7 +27,7 @@ class ChiefHome extends Component {
 
     
     componentDidMount(){
-        axios.get('http://localhost:5000/drugs').then((response) => {
+        axios.get('https://koombiyo-pharmacy.herokuapp.com/drugs').then((response) => {
             console.log(JSON.stringify("drug list" + JSON.stringify(response.data.data)));
             this.setState({ drugs: response.data.data})
           });          

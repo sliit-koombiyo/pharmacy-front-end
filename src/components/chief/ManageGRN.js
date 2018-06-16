@@ -32,7 +32,7 @@ class ManageGRN extends Component {
     }
 
     componentDidMount(){
-        axios.get('http://localhost:5000/grn').then((response) => {
+        axios.get('https://koombiyo-pharmacy.herokuapp.com/grn').then((response) => {
             console.log(JSON.stringify("grn list" + JSON.stringify(response.data.data)));
             this.setState({ grns: response.data.data})
           });
