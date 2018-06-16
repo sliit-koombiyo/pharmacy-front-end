@@ -30,12 +30,20 @@ class ManageGRN extends Component {
     toggleModal = () => {
       this.setState({modalOpen: !this.state.modalOpen});
     }
+      refreshDrugs = () => {
+        axios.get('https://koombiyo-pharmacy.herokuapp.com/grn').then((response) => {
+          console.log(JSON.stringify("grn list" + JSON.stringify(response.data.data)));
+          this.setState({ grns: response.data.data})
+        });
+        
+    }
 
     componentDidMount(){
-        axios.get('https://koombiyo-pharmacy.herokuapp.com/grn').then((response) => {
-            console.log(JSON.stringify("grn list" + JSON.stringify(response.data.data)));
-            this.setState({ grns: response.data.data})
-          });
+        // axios.get('https://koombiyo-pharmacy.herokuapp.com/grn').then((response) => {
+        //     console.log(JSON.stringify("grn list" + JSON.stringify(response.data.data)));
+        //     this.setState({ grns: response.data.data})
+        //   });
+        this.refreshDrugs();
           
          
     }
@@ -73,17 +81,20 @@ class ManageGRN extends Component {
           this.toggleModal()
        });
       }
-      // goToUpdate= (evt) => {
-      //   // console.log(evt.target.getAttribute('tempdata'));
-      //   let selected = this.state.drugs.find((drug)=>{
-      //     return drug._id === evt.target.getAttribute('tempdata');
-      //   })
-      //   this.setState({selectedDrug: selected}, ()=>{
-      //     this.toggleModal()
-      //  });
+        handledeleteClick= (evt)=>{
        
-      // }
-
+       let selected = this.state.grns.find((grn)=>{
+        return grn._id == evt.target.getAttribute('tempdata');
+      });
+       console.log("Selected object"+JSON.stringify(selected));
+        axios.delete("https://koombiyo-pharmacy.herokuapp.com/grn/"+selected._id).then((res)=>{
+          console.log(res)
+        }).catch((err)=>{
+          console.log(err);
+        })
+        this.refreshDrugs();
+        this.componentDidMount();
+      };
       
 
     render() {
@@ -141,7 +152,7 @@ class ManageGRN extends Component {
                           <td>{element.amount}</td>
                           <td><Button color="link" tempdata={element._id} onClick={this.showDetails}>View</Button></td>
                           {/* <td><Button color="link" tempdata={element._id} onClick={this.goToUpdate}>Update</Button></td> */}
-                          <td><Button color="link" tempdata={element._id} onClick={this.handleClick}>Delete</Button></td>
+                          <td><Button color="link" tempdata={element._id} onClick={this.handledeleteClick}>Delete</Button></td>
                         </tr>
                       }) 
                     }
