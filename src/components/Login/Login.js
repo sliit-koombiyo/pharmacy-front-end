@@ -89,14 +89,14 @@ class Login extends Component {
 
     if (this.state.inputEmpID && this.state.inputUsername && this.state.inputPassword && this.state.inputRole && this.state.inputJoinedYear) {
        const newUser = {
-         EmpID: this.state.inputEmpID,
-         username: this.state.inputUsername,
+        empID: this.state.inputEmpID,
+        userName: this.state.inputUsername,
          password: this.state.inputPassword,
          role: this.state.inputRole,
-         joinedYear: this.state.inputJoinedYear
+        //  joinedYear: this.state.inputJoinedYear  
        }
 
-      console.log('all fields OK');
+      console.log('all fields OK : ' + JSON.stringify(newUser));
        axios.post('https://koombio-auth.herokuapp.com/user/register', newUser).then((response) => {
          if (response.data.success) {
            console.log('response from order API ' + JSON.stringify(response.data));
