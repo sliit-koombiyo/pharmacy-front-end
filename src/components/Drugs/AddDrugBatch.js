@@ -33,7 +33,6 @@ class AddDrugBatch extends Component {
 
     refreshDrugsBatch = () => {
       axios.get('https://koombiyo-pharmacy.herokuapp.com/drugsBatch').then((response) => {
-        console.log(JSON.stringify("drug list" + JSON.stringify(response.data.data)));
         this.setState({ drugbatchs: response.data.data}, () => {
           console.log("Drug Page refreshed" + this.state.drugbatch);
         })
@@ -52,8 +51,10 @@ class AddDrugBatch extends Component {
         expiryDate: this.state.date,
         batchQuntity: event.target.batchQuntity.value
       }
-      console.log("New Drug to add"+JSON.stringify(data));
-      axios.post("https://koombiyo-pharmacy.herokuapp.com/drugsBatch",{data}).then((res)=>{
+      console.log("batch ID"+event.target.batchID.value);
+      console.log("Drug ID"+event.target.drugID.value);
+     // console.log("New Drug to add"+JSON.stringify(data));
+      axios.post("http://localhost:5000/drugsBatch",data).then((res)=>{
         console.log(res)
       }).catch((err)=>{
         console.log(err);
@@ -125,7 +126,7 @@ class AddDrugBatch extends Component {
                  <b><Label htmlFor="expiryDate">ExpiryDate</Label></b>
                  <DatePicker  selected={this.state.date} onChange={this.handleDateChange}/>
                   <br></br>
-                  <b><Label htmlFor="batchQuntit   y">Batch Quantity</Label></b>
+                  <b><Label htmlFor="batchQuntity">Batch Quantity</Label></b>
                   <Input id="batchQuntity" name="batchQuntity" type="text" />
                     <br></br>
                 <Button color="primary">Add</Button>
