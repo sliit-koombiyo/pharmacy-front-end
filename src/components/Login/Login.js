@@ -292,7 +292,7 @@ class Login extends Component {
                   placeholder="Password" />
               </FormGroup>
               
-              <Button bsStyle="primary" onClick={this.recoverPassword} >Recover Password</Button>
+              <Button color="primary" onClick={this.recoverPassword} >Recover Password</Button>
             </Form>
             <hr />
             <Alert isOpen={this.state.recoveryAlertOpen} color="danger">
