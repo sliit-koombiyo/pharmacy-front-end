@@ -29,6 +29,7 @@ a {
 
 .loginCardContainer {
   width: 45%;
+ 
   margin-left: auto;
   margin-right: auto; 
 }
@@ -39,6 +40,7 @@ a {
 
 .addCardContainer{
   width: 45%;
+  height:30%;  
   margin-left: auto;
   margin-right: auto; 
 }
