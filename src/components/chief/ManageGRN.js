@@ -51,10 +51,15 @@ class ManageGRN extends Component {
           deliveredQuantity: event.target.deliveredQuantity.value,
           amount: event.target.amount.value
         } 
+        console.log("form data : " + JSON.stringify(postBody))
         // try creating an object using the above -> event.target.drugID.value
         //and pass that object to the axios post method
-        
-        axios.post("https:/koombiyo-pharmacy.herokuapp.com/grn",data);
+        axios.post("https:/koombiyo-pharmacy.herokuapp.com/grn",postBody).then(result=>{
+          axios.get('https://koombiyo-pharmacy.herokuapp.com/grn').then((response) => {
+            console.log(JSON.stringify("grn list" + JSON.stringify(response.data.data)));
+            this.setState({ grns: response.data.data})
+          });
+        });
     }
 
     showDetails = (evt) => {
@@ -65,7 +70,6 @@ class ManageGRN extends Component {
         this.setState({selectedGRN: selected}, ()=>{
           this.toggleModal()
        });
-       
       }
       // goToUpdate= (evt) => {
       //   // console.log(evt.target.getAttribute('tempdata'));
